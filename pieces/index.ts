@@ -90,6 +90,18 @@ export const PIECES: Piece[] = [
     media: media("gait"),
     theme: { light: "#eef0f0", dark: "#eef0f0" },
   },
+  {
+    path: "dither",
+    name: "backdrop",
+    what: "Dithered background maker",
+    title: "Dithers any picture into a wallpaper",
+    line: "Drop in any picture and get it back as a dark, orange pixel dither. Tune the dots and colours, download a PNG for your screen.",
+    credit: { name: "TheCoderBTW", handle: "TheCoderBtw", url: "https://x.com/TheCoderBtw/status/2121061189962866865", work: "the “New look!” post" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/dither",
+    usesAi: false,
+    media: media("dither"),
+    theme: { light: "#0b0a0a", dark: "#0b0a0a" },
+  },
 ];
 
 export function piece(path: string): Piece {

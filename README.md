@@ -32,6 +32,7 @@ open-source code. This site is where its front-end builds live, one per path:
 | [`/slider`](https://frontend.vedantsoni.com/slider) | Haptic slider: clicks at every whole number on a phone, stretches past the ends. Describe it in a sentence (AI), copy React or HTML, open it on your phone by QR. Embed: [`/slider/detent.js`](https://frontend.vedantsoni.com/slider/detent.js) | [Max Yan](https://x.com/MlXZY88/status/2120973389498098103) | [detent](https://github.com/VedSoni-dev/detent) |
 | [`/footer`](https://frontend.vedantsoni.com/footer) | Footer with a grain photo band: list your image paths, tune the grain, write the links with AI, copy one file. Embed: [`/footer/GrainFooter.tsx`](https://frontend.vedantsoni.com/footer/GrainFooter.tsx) | [Faris](https://x.com/Faris_rzk) | [grainfoot](https://github.com/VedSoni-dev/grainfoot) |
 | [`/gait`](https://frontend.vedantsoni.com/gait) | Gait-lab dashboard: your running numbers drawn as a live halftone load map, a motion-capture runner and a protocol. No AI. | [Praveen Kumar](https://x.com/praveenisomer) | [midstance](https://github.com/VedSoni-dev/midstance) |
+| [`/dither`](https://frontend.vedantsoni.com/dither) | Dithered background maker (backdrop): drop in any picture, get it back as a dark ordered dither in ember orange or four other palettes, tune dot size, contrast, darkness and mix, download a PNG sized for your screen. All in your browser, no upload, no AI. | [TheCoderBTW](https://x.com/TheCoderBtw/status/2121061189962866865) ("New look!") | [pieces/dither](https://github.com/VedSoni-dev/frontend/tree/main/pieces/dither) |
 
 Each piece is a clean-room rebuild from a public post: new code, drawings and copy, no original code, logo or brand.
 
@@ -57,7 +58,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. Requires Node 20.9 or newer. `npm test` runs the flowers and slider engine tests;
+Open http://localhost:3000. Requires Node 20.9 or newer. `npm test` runs the flowers, slider and dither engine tests;
 `npm run build` copies the embeddable files into `public/`, runs the tests and builds.
 
 To click through sign-in without touching publik, run publik's mock (in the forkthis repo,
