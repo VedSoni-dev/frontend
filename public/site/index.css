@@ -81,3 +81,8 @@
 @media (max-width: 639px) {
   #pieces .grid > .tile.span-4 { grid-column: 1 / -1; }
 }
+/* a narrow tile (span-4 or span-3) shows its whole 16:9 poster and loop: the shared media height made it taller than
+   wide, and object-fit cover then cut the burned-in headline at both ends */
+@media (min-width: 640px) {
+  #pieces .tile.span-4 .tile__media, #pieces .tile.span-3 .tile__media { height: auto; aspect-ratio: 16 / 9; }
+}
