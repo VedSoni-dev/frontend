@@ -1,0 +1,20 @@
+{
+ "palettes": [
+  "soot-pale-lime"
+ ],
+ "types": [
+  "instrument"
+ ],
+ "dealt": [
+  "instrument",
+  "gabarito",
+  "schibsted"
+ ],
+ "moments": [
+  {
+   "id": "pinned-chapters",
+   "at": "2026-11-13T20:59:56.054Z",
+   "seed": "2144dd01"
+  }
+ ]
+}

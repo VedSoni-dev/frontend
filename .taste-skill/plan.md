@@ -1,0 +1,10 @@
+kind: software (page type software, site-kind software) - fork this frontend: a gallery of free front-end pieces (hover flowers, a haptic slider, a grain footer, a gait dashboard), each usable at its own path with a free publik account and copyable under MIT; main action: See the pieces
+deal: hero triptych (its use, a product with many outputs: four pieces, a set each) · nav-mega (one "Pieces" word opening the pieces by where they run and one picture card for the sign-in) · footer-statement on the sky lit ground · close-word · rhythm space · buttons tonal · mark ring · radius sharp (a developer tool) · palette soot-pale-lime (near-black ground so the pieces' own colours carry the page; lime as the one accent) · type instrument (Instrument Sans + DM Mono) · no effect: the pieces' real screens and loops are the picture · moment pinned-chapters in #how (moments.mjs pick)
+voice: technical-dry; the pieces are the subjects; "you" for the person building a site; sentences 8 to 18 words; no humour; house words piece, path, sign in, publik, file, MIT; never "simply", "seamless", "magic"; each designer named on the card and in the credits
+sections
+1 hero #top · what it is and the one action · picture: the collage, one set per piece of its real screens and its name tag (object) · 1 screen · entrance: the h1, then the lead and the button; the sets change every 2.8 s with a pause disc
+2 #pieces · the pieces themselves (open tiles 6+6, .g2) · picture: each piece's real preview loop, a still until hovered (use) · 2 screens
+3 #how · how it stays free: open a piece, sign in once, pick what runs the AI (pinned-chapters) · pictures: the real gate, the tool after sign-in, the kit's mode picker (UI) · 2 screens · beat: pinned-chapters
+4 #embed · the three embeddable files and their snippet (split-text-left) · picture: the same files running live, a garden and a slider (object) · 1 screen
+5 #credits · designers and source code (rows) · no picture: a credits table · 1 screen
+6 footer.closing · close-word + footer-statement · 1 screen

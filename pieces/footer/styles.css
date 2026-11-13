@@ -1,0 +1,14 @@
+/* /footer: grainfoot's own system, as in its clone (globals.css + playground.css), plus the studio kit's mode picker.
+   kit.css goes in a cascade layer, so grainfoot's own :root tokens always win over the kit's; the bridge maps the
+   tokens the picker and the site gate read. */
+@import "../../kit/ui/kit.css" layer(kit);
+@import "./globals.css";
+@import "./playground.css";
+
+:root {
+  --fg: var(--ink); --bg-2: var(--soft); --accent-fg: #fff;
+  --font-body: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif; --font-display: var(--font-body);
+  --publik-bg: var(--bg); --publik-card: var(--card); --publik-ink: var(--ink); --publik-muted: var(--muted);
+  --publik-line: var(--line); --publik-accent: var(--ink); --publik-accent-ink: var(--bg); --publik-hover: var(--soft);
+}
+.ai-by { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }

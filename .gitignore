@@ -7,3 +7,8 @@ out
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# taste-skill check output (the plan, histories and waivers are kept)
+.taste-skill/chrome-*
+.taste-skill/shots
+shots/

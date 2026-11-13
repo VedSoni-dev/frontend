@@ -1,0 +1,78 @@
+/* The site gate (components/Gate.tsx), drawn in each piece's own colours and type: every piece sets --publik-* on :root
+   (the same variables its clone's gate read), and the gate inherits the piece's body font. Every rule is under .fg-gate
+   with explicit values, so a piece's own element rules (h1, a, button, img) never reshape it. */
+.fg-gate {
+  --g-bg: var(--publik-bg, #f6f5f1); --g-card: var(--publik-card, #fff); --g-ink: var(--publik-ink, #1c1b19);
+  --g-muted: var(--publik-muted, #6b6862); --g-line: var(--publik-line, #e3e0d8); --g-accent: var(--publik-accent, #1c1b19);
+  --g-accent-ink: var(--publik-accent-ink, #fff); --g-hover: var(--publik-hover, rgba(0, 0, 0, .05));
+  box-sizing: border-box; min-height: 100vh; min-height: 100dvh; background: var(--g-bg); color: var(--g-ink);
+  padding: 0 0 48px; display: flex; flex-direction: column;
+}
+.fg-gate *, .fg-gate *::before, .fg-gate *::after { box-sizing: border-box; }
+.fg-gate .fg-wrap { width: min(100% - 48px, 1200px); margin: 0 auto; flex: 1 0 auto; display: flex; flex-direction: column; }
+.fg-gate .fg-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
+.fg-gate .fg-home, .fg-gate .fg-all {
+  display: inline-flex; align-items: center; min-height: 44px; color: var(--g-ink); text-decoration: none;
+  font-size: 15px; font-weight: 500; letter-spacing: -0.01em;
+}
+.fg-gate .fg-home span { color: var(--g-muted); margin-left: .3em; }
+.fg-gate .fg-all { color: var(--g-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in oklab, currentColor 40%, transparent); }
+.fg-gate .fg-all:hover { color: var(--g-ink); text-decoration-color: currentColor; }
+
+.fg-gate .fg-grid { flex: 1 0 auto; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; align-items: center; align-content: center; padding-bottom: 72px; }
+.fg-gate .fg-media {
+  margin: 0; border-radius: 16px; overflow: hidden; background: var(--g-card); aspect-ratio: 16 / 9;
+  border: 1px solid var(--g-line); box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 24px 60px -32px rgba(0, 0, 0, .35);
+}
+.fg-gate .fg-media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.fg-gate .fg-card {
+  padding: 28px 24px; border: 1px solid var(--g-line); border-radius: 20px; background: var(--g-card);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .03), 0 16px 40px -24px rgba(0, 0, 0, .35);
+}
+.fg-gate .fg-app { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; font-size: 14px; font-weight: 600; color: var(--g-ink); }
+.fg-gate .fg-app img { display: block; width: 20px; height: 20px; border-radius: 5px; }
+.fg-gate .fg-app span { font-weight: 500; color: var(--g-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+.fg-gate .fg-title {
+  margin: 0 0 10px; font-family: var(--publik-display-font, inherit); font-size: clamp(26px, 2.2vw + 10px, 34px);
+  line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; color: var(--g-ink); text-wrap: balance;
+}
+.fg-gate .fg-body { margin: 0 0 8px; font-size: 16px; line-height: 1.55; color: var(--g-ink); }
+.fg-gate .fg-quiet { color: var(--g-muted); font-size: 15px; }
+.fg-gate .fg-note { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font-size: 14px; line-height: 1.45; color: var(--g-muted); }
+.fg-gate .fg-small { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: var(--g-muted); }
+.fg-gate .fg-buttons { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; }
+.fg-gate .fg-btn {
+  display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 16px; margin: 0;
+  border: 1px solid transparent; border-radius: 12px; font: inherit; font-size: 16px; font-weight: 600; line-height: 1.2;
+  text-decoration: none; cursor: pointer; transition: transform .12s cubic-bezier(.22, 1, .36, 1), opacity .15s, background-color .15s;
+}
+.fg-gate .fg-btn:active { transform: scale(.98); }
+.fg-gate .fg-btn:disabled { opacity: .55; cursor: default; transform: none; }
+.fg-gate .fg-btn:focus-visible, .fg-gate a:focus-visible { outline: 2px solid var(--g-accent); outline-offset: 2px; }
+.fg-gate .fg-primary { background: var(--g-accent); color: var(--g-accent-ink); }
+.fg-gate .fg-primary:hover { opacity: .9; }
+.fg-gate .fg-secondary { background: transparent; color: var(--g-ink); border-color: var(--g-line); }
+.fg-gate .fg-secondary:hover { background: var(--g-hover); }
+.fg-gate .fg-wait { cursor: default; }
+.fg-gate .fg-spin { flex: none; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: fg-spin .8s linear infinite; }
+@keyframes fg-spin { to { transform: rotate(360deg); } }
+.fg-gate .fg-facts { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--g-line); font-size: 14px; line-height: 1.55; color: var(--g-muted); }
+.fg-gate .fg-facts p { margin: 0 0 8px; }
+.fg-gate .fg-facts p:last-child { margin: 0; }
+.fg-gate .fg-facts a { color: var(--g-ink); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: color-mix(in oklab, currentColor 40%, transparent); }
+.fg-gate .fg-facts a:hover { text-decoration-color: currentColor; }
+
+@media (max-width: 900px) {
+  .fg-gate .fg-grid { flex: 0 0 auto; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; align-content: start; padding-bottom: 0; }
+  .fg-gate .fg-card { padding: 22px 18px; }
+}
+@media (max-width: 640px) {
+  .fg-gate .fg-wrap { width: calc(100% - 32px); }
+  .fg-gate .fg-top { min-height: 56px; }
+  .fg-gate .fg-media { border-radius: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fg-gate .fg-spin { animation-duration: 2.4s; }
+  .fg-gate .fg-btn { transition: none; }
+}

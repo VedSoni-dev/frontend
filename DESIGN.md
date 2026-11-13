@@ -1,12 +1,21 @@
 # fork this frontend: design
 
-Written before any UI code (the taste skill's brief), then kept true to what shipped.
-
-- **Theme:** paper (`kit/ui/themes/paper.css`), adjusted below.
-- **One-line feel:** <!-- e.g. "a calm notebook that thinks with you" -->
-- **Type:** display ___, body ___, mono ___. Sizes: ___.
-- **Colour:** background ___, ink ___, ONE accent ___ (used for: the primary action and the live state only).
-- **The hero moment:** <!-- the one thing on the landing page that makes someone stop scrolling -->
-- **Motion:** follows docs/principles.md from the studio (springs ≤300 ms, arcs, staggered settle, instant frequent actions). Signature motion for this build: ___.
-- **Every state designed:** empty ___ · loading (more than 400 ms → progress) ___ · error ___ · success flourish ___.
-- **Reel shots:** the 3 moments in the app that will carry the video: 1) ___ 2) ___ 3) ___.
+- **Two looks on purpose.** The index at `/` is the site's own (below). Every piece keeps its own look from its repo
+  (seedbed's paper and greens, detent's white sheet and orange, grainfoot's warm neutrals, Midstance's halftone blues),
+  each in its own root layout so nothing leaks between them. The gate in front of a piece is drawn in that piece's colours
+  and type through its `--publik-*` variables.
+- **Index (taste skill, plan in `.taste-skill/plan.md`):** kind software; hero triptych (headline, a collage of each
+  piece's real screens that changes set every 2.8 s, one big button); nav-mega; close-word; footer-statement on the sky
+  lit ground; rhythm space; tonal buttons; ring mark; radius sharp.
+- **Type:** Instrument Sans (display 500, tight tracking) + DM Mono for paths and code.
+- **Colour:** near-black ground `#0f0f0f`, white ink, ONE accent, pale lime `#dafa9c`, for the main button, the focus
+  ring and the active state only. The pieces bring the rest of the colour.
+- **The hero moment:** the collage cycling through the four pieces' real screens with each piece's name and path.
+- **Motion:** the hero's entrance, the collage's set change, piece cards that play their real preview loop while the
+  pointer rests on them, and one dealt moment: pinned chapters in "Free with one publik sign-in" (open a piece, sign in
+  once, pick what runs the AI). Hover and press on every link and button. Reduced motion: everything rests.
+- **Every state designed (the gate):** loading (a spinner in the button's place), signed out (preview + "Free. Sign in
+  with publik to use it."), waiting for sign-in (a spinner and a line), the plan step (publik's own words), publik
+  unreachable (Retry), signed in (the tool itself).
+- **Reel shots:** 1) the index collage cycling; 2) a piece's gate, one click, the tool opens; 3) crossing to another
+  piece already signed in.

@@ -1,0 +1,9 @@
+/* /flowers: seedbed's own system, as in its clone (globals.css: tokens, type, the garden pieces; app.css: the workbench),
+   plus the studio kit's mode picker. kit.css goes in a cascade layer, so seedbed's own :root tokens always win over
+   the kit's; the bridge under it maps the few tokens the picker reads that seedbed names differently. */
+@import "../../kit/ui/kit.css" layer(kit);
+@import "./globals.css";
+@import "./app.css";
+
+:root { --fg: var(--ink); --accent-fg: var(--accent-ink); --font-body: var(--sans); --font-display: var(--sans); --font-code: var(--mono); }
+.ai-by { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }

@@ -1,0 +1,7 @@
+/* /slider: detent's own system, as in its clone (globals.css), plus the studio kit's mode picker. kit.css goes in a
+   cascade layer, so detent's own :root tokens always win over the kit's; the bridge maps the tokens the picker reads. */
+@import "../../kit/ui/kit.css" layer(kit);
+@import "./globals.css";
+
+:root { --fg: var(--ink); --accent-fg: #fff; --danger: var(--err); --font-body: var(--font); --font-display: var(--font); --font-code: var(--mono); }
+.ai-by { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 15px; }

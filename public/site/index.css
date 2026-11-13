@@ -1,0 +1,47 @@
+/* The index's page CSS: only what sits inside a visual and the kit lacks (system.md). Loaded after the kit. */
+
+.nowrap { white-space: nowrap; }
+
+/* the hero collage: the name tag of the piece each set shows (real screens around it) */
+.ly-collage { container-type: inline-size; }
+.ly-collage .ly-piece { box-shadow: 0 1px 2px rgb(0 0 0 / .3), 0 22px 48px -22px rgb(0 0 0 / .7); border: 1px solid rgb(255 255 255 / .08); }
+.ly-collage .ly-piece > img { object-position: 50% 0%; }
+.ly-collage .pc-tag { display: flex; align-items: center; gap: 2.2cqw; padding: 2.4cqw 2.8cqw; background: #fff; color: #141413; }
+.ly-collage .pc-tag > img { width: max(24px, 5.2cqw); height: max(24px, 5.2cqw); border-radius: 1.2cqw; flex: none; object-fit: contain; }
+.pc-tag span { display: grid; gap: .4cqw; min-width: 0; }
+.pc-tag b { font: 500 max(14px, 2.8cqw)/1.15 var(--font-display); letter-spacing: -0.01em; }
+.pc-tag code { font: 400 max(13px, 2.1cqw)/1.2 var(--font-mono); color: #5f5f5f; }
+
+/* the piece tiles: the real preview loop (a still poster until the pointer rests on the tile) */
+.piece .tile__media { --tile-ratio: 16 / 9; border: 1px solid var(--line); }
+.piece .tile__media > video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.piece .tile__head h3 a { color: inherit; text-decoration: none; }
+.piece .tile__head h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.piece .tile__price { font-family: var(--font-mono); font-size: var(--t-small); color: var(--muted); }
+.piece__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-5); margin: 0; font-size: var(--t-small); color: var(--muted); }
+.piece__meta a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--line-strong); min-height: 24px; display: inline-flex; align-items: center; }
+.piece__meta a:hover { text-decoration-color: currentColor; }
+
+/* #embed: the files, the snippet, and the same files running live in the frame */
+.embed__text { display: flex; flex-direction: column; gap: var(--s-6); min-width: 0; }
+.embed .rows__value, .credits__rows .rows__value { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); align-self: center; }
+.embed__code { margin: 0; padding: var(--s-5); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); overflow-x: auto; font: 400 14px/1.6 var(--font-mono); color: var(--ink); }
+.embed__live { display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-5); background: var(--ground-bg); border-radius: var(--r-lg); border: 0; min-height: 420px; }
+.embed__garden { display: block; flex: 1 1 auto; min-height: 260px; height: auto !important; border-radius: var(--r-md); overflow: hidden; background: #f7f1e3; }
+.embed__slider { flex: none; padding: var(--s-5) var(--s-6); border-radius: var(--r-md); background: #fff; color: #141413; }
+
+/* #credits */
+.credits__text p { color: var(--ink); max-width: 52ch; }
+.credits__links { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); }
+.credits__rows .rows__name small { display: block; font-weight: 400; color: var(--muted); font-size: var(--t-small); margin-top: var(--s-1); }
+.credits__rows .rows__name small a { color: var(--ink); text-underline-offset: 3px; }
+
+@media (max-width: 1023px) {
+  .embed__live { min-height: 360px; }
+}
+@media (max-width: 639px) {
+  .embed__live { min-height: 0; padding: var(--s-4); }
+  .embed__garden { min-height: 200px; }
+  .embed__code { font-size: 13px; }
+  .piece__meta { justify-content: flex-start; }
+}
