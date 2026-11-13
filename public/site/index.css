@@ -68,15 +68,16 @@
   .piece__meta { justify-content: flex-start; }
 }
 
-/* an odd last piece takes the whole row: its loop on the left (7 of 12), its words on the right */
-@media (min-width: 1024px) {
-  .piece--wide { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: auto auto 1fr; column-gap: var(--s-6); padding: var(--s-3); }
-  .piece--wide > .tile__media { grid-column: 1; grid-row: 1 / span 3; height: auto; aspect-ratio: 16 / 9; }
-  .piece--wide > :not(.tile__media) { grid-column: 2; margin-inline: 0 var(--s-5); }
-  .piece--wide > .tile__head { padding-top: var(--s-5); }
-  .piece--wide > .piece__meta { align-self: end; flex-direction: column; align-items: flex-start; padding-bottom: var(--s-3); }
+
+/* #pieces keeps the kit's two screens: two tiles on the first, the rest (three) side by side on the second. A tablet
+   keeps that row of three (two-up would leave the third alone under them); a phone stacks every tile, one a row */
+@media (min-width: 640px) and (max-width: 1023px) {
+  #pieces .grid > .tile.span-4, #pieces .grid > .tile.span-4:nth-child(odd of .tile):nth-last-child(1 of .tile) { grid-column: auto / span 4; }
+  #pieces .tile.span-4 { --media-h: 20svh; }
+  #pieces .tile.span-4 .tile__head { flex-wrap: wrap; gap: 0 var(--s-2); }
+  #pieces .tile.span-4 { min-width: 0; overflow-wrap: anywhere; }
+  #pieces .tile.span-4 .piece__meta > a { display: none; }
 }
-/* #pieces is one screen per row of tiles (--h set from the count on the section), not the kit's fixed two */
-main > #pieces.g2 > .wrap { grid-template-rows: repeat(var(--h), minmax(0, 1fr)); }
-#pieces .piece { align-self: start; }
-@media (max-width: 639px) { main > #pieces { --hm: 1; } }   /* a phone: as tall as its stacked tiles, no empty screen after them */
+@media (max-width: 639px) {
+  #pieces .grid > .tile.span-4 { grid-column: 1 / -1; }
+}

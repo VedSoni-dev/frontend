@@ -52,9 +52,9 @@ function CollageSet({ p, on }: { p: Piece; on: boolean }) {
   );
 }
 
-function PieceTile({ p, wide }: { p: Piece; wide?: boolean }) {
+function PieceTile({ p, span = 6 }: { p: Piece; span?: number }) {
   return (
-    <article className={`tile ${wide ? "span-12 piece--wide" : "span-6"} piece m-zoom`} data-hover-play="">
+    <article className={`tile span-${span} piece m-zoom`} data-hover-play="">
       <a className="tile__media" href={`/${p.path}`} aria-label={p.title} tabIndex={-1}>
         <video src={p.media.video} poster={p.media.poster} muted loop playsInline preload="none" aria-hidden="true" />
       </a>
@@ -72,10 +72,10 @@ function PieceTile({ p, wide }: { p: Piece; wide?: boolean }) {
 }
 
 export default function Index() {
-  // two tiles a row, one row a screen; an odd last piece takes the whole row (media left, words right)
-  const rows: Piece[][] = [];
-  for (let i = 0; i < PIECES.length; i += 2) rows.push(PIECES.slice(i, i + 2));
-  const [first, ...rest] = rows;
+  // the section is the kit's two screens: the h2 and two tiles on the first, the rest side by side on the second
+  // (three a row at span-4, four at span-3), so an odd count never leaves a lone tile over empty ground
+  const first = PIECES.slice(0, 2), rest = PIECES.slice(2);
+  const restSpan = rest.length >= 4 ? 3 : rest.length === 3 ? 4 : 6;
   const embeds = PIECES.filter((p) => p.embed);
   return (
     <>
@@ -131,19 +131,17 @@ export default function Index() {
           </div></div>
         </section>
 
-        <section className="section g2" id="pieces" style={{ ["--h" as string]: rows.length }} aria-labelledby="pieces-h">
+        <section className="section g2" id="pieces" aria-labelledby="pieces-h">
           <div className="wrap">
             <div className="group">
               <div className="section-head">
                 <h2 id="pieces-h">The pieces. <span className="muted">Each runs at its own address and copies into your site.</span></h2>
               </div>
-              <div className="grid">{first.map((p) => <PieceTile key={p.path} p={p} wide={first.length === 1} />)}</div>
+              <div className="grid">{first.map((p) => <PieceTile key={p.path} p={p} />)}</div>
             </div>
-            {rest.map((row) => (
-              <div className="group" key={row[0].path}>
-                <div className="grid">{row.map((p) => <PieceTile key={p.path} p={p} wide={row.length === 1} />)}</div>
-              </div>
-            ))}
+            <div className="group">
+              <div className="grid">{rest.map((p) => <PieceTile key={p.path} p={p} span={restSpan} />)}</div>
+            </div>
           </div>
         </section>
 

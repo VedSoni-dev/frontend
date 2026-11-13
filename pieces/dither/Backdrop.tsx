@@ -6,8 +6,8 @@ import { useCallback, useEffect, useRef, useState, type ChangeEvent, type Pointe
 import { DEFAULTS, PALETTES, dither, exportPlan, normalize, upscale, type PaletteId, type Pattern, type Settings } from "./engine.js";
 import { SAMPLES } from "./samples.js";
 
-type Source = { canvas: HTMLCanvasElement; w: number; h: number; name: string; preview: ImageData; note?: string };
-type Status = { kind: "loading" } | { kind: "ready" } | { kind: "error"; message: string };
+type Source = { canvas: HTMLCanvasElement; w: number; h: number; name: string; preview: ImageData; note?: string; sample?: boolean };
+type Status = { kind: "empty" } | { kind: "loading" } | { kind: "ready" } | { kind: "error"; message: string };
 type SizeId = "screen" | "original" | "1080" | "1440" | "4k" | "phone";
 
 const MAX_EDGE = 4096;
@@ -47,7 +47,7 @@ function toSource(img: CanvasImageSource, iw: number, ih: number, name: string, 
 function sampleSource(i: number): Source {
   const s = SAMPLES[i], w = 1600, h = 1000, c = makeCanvas(w, h);
   ctx2d(c).putImageData(new ImageData(new Uint8ClampedArray(s.paint(w, h)), w, h), 0, 0);
-  return toSource(c, w, h, s.id);
+  return { ...toSource(c, w, h, s.id), sample: true };
 }
 
 async function decode(file: File): Promise<Source> {
@@ -98,7 +98,7 @@ async function render(src: Source, s: Settings, tw: number, th: number): Promise
 export default function Backdrop() {
   const [s, setS] = useState<Settings>(DEFAULTS);
   const [src, setSrc] = useState<Source | null>(null);
-  const [status, setStatus] = useState<Status>({ kind: "loading" });
+  const [status, setStatus] = useState<Status>({ kind: "empty" });
   const [sample, setSample] = useState(0);
   const [compare, setCompare] = useState(false);
   const [split, setSplit] = useState(50);
@@ -115,11 +115,8 @@ export default function Backdrop() {
   const fileInput = useRef<HTMLInputElement>(null);
   const frame = useRef(0);
 
-  // settings from last time; a sample so the first paint is already dithered
-  useEffect(() => {
-    setS(readSettings());
-    try { setSrc(sampleSource(0)); setStatus({ kind: "ready" }); } catch (e) { setStatus({ kind: "error", message: String((e as Error).message) }); }
-  }, []);
+  // settings from last time; the stage opens empty until you add a picture (a sample only when you ask for one)
+  useEffect(() => { setS(readSettings()); }, []);
   useEffect(() => saveSettings(s), [s]);
 
   // the preview's grid follows the stage's real size in device pixels, so a dot here is a dot on your screen
@@ -172,7 +169,11 @@ export default function Backdrop() {
   const set = <K extends keyof Settings>(k: K, v: Settings[K]) => setS((p) => normalize({ ...p, [k]: v }));
   const pickPalette = (id: PaletteId) => setS((p) => normalize({ ...p, palette: id, accent: id === "custom" ? p.accent : PALETTES[id].accent }));
 
-  const nextSample = () => { const i = (sample + 1) % SAMPLES.length; setSample(i); setSaved(null); setSrc(sampleSource(i)); setStatus({ kind: "ready" }); };
+  const showSample = (i: number) => {
+    setSample(i); setSaved(null);
+    try { setSrc(sampleSource(i)); setStatus({ kind: "ready" }); } catch (e) { setStatus({ kind: "error", message: String((e as Error).message) }); }
+  };
+  const nextSample = () => showSample(src?.sample ? (sample + 1) % SAMPLES.length : 0);
 
   const download = async () => {
     if (!src || busy) return;
@@ -209,8 +210,8 @@ export default function Backdrop() {
       <main className="bd-main">
         <section className="bd-stage-wrap" aria-label="Preview">
           <div ref={stage} className="bd-stage" style={{ aspectRatio: aspect, width: src ? `min(100%, calc(72svh * ${src.preview.width / src.preview.height}))` : "100%" }}>
-            <canvas ref={orig} className="bd-orig" aria-hidden={!compare} style={{ visibility: compare ? "visible" : "hidden" }} />
-            <canvas ref={out} className="bd-out" role="img" aria-label="Your picture, dithered" style={compare ? { clipPath: `inset(0 0 0 ${split}%)` } : undefined} />
+            <canvas ref={orig} className="bd-orig" aria-hidden={!compare} hidden={!src} style={{ visibility: compare ? "visible" : "hidden" }} />
+            <canvas ref={out} className="bd-out" role="img" aria-label={src?.sample ? "A sample picture, dithered" : "Your picture, dithered"} hidden={!src} style={compare ? { clipPath: `inset(0 0 0 ${split}%)` } : undefined} />
             {overlay && (
               <div className="bd-overlay" aria-hidden="true">
                 <p>Start something new</p>
@@ -225,6 +226,14 @@ export default function Backdrop() {
                 <span>before · after</span>
               </div>
             )}
+            {!src && status.kind !== "loading" && (
+              <div className="bd-empty">
+                <p>Drop your picture here</p>
+                <button type="button" className="bd-pick" onClick={() => fileInput.current?.click()}>Pick a picture</button>
+                <button type="button" className="bd-try" onClick={() => showSample(0)}>Try a sample</button>
+              </div>
+            )}
+            {src?.sample && <span className="bd-sample-tag">Sample</span>}
             {status.kind === "loading" && <div className="bd-state">Opening your picture…</div>}
             {dragging && <div className="bd-state bd-drop">Drop it</div>}
           </div>
@@ -235,11 +244,13 @@ export default function Backdrop() {
             </div>
           )}
           {src?.note && status.kind === "ready" && <p className="bd-note">{src.note}</p>}
-          <div className="bd-view">
-            <button type="button" className={compare ? "on" : ""} aria-pressed={compare} onClick={() => setCompare((v) => !v)}>Before / after</button>
-            <button type="button" className={overlay ? "on" : ""} aria-pressed={overlay} onClick={() => setOverlay((v) => !v)}>As a background</button>
-            <button type="button" onClick={nextSample}>Another sample</button>
-          </div>
+          {src && (
+            <div className="bd-view">
+              <button type="button" className={compare ? "on" : ""} aria-pressed={compare} onClick={() => setCompare((v) => !v)}>Before / after</button>
+              <button type="button" className={overlay ? "on" : ""} aria-pressed={overlay} onClick={() => setOverlay((v) => !v)}>As a background</button>
+              <button type="button" onClick={nextSample}>{src.sample ? "Another sample" : "Try a sample"}</button>
+            </div>
+          )}
         </section>
 
         <aside className="bd-panel" aria-label="Settings">
@@ -294,6 +305,7 @@ export default function Backdrop() {
 
           <div className="bd-dl">
             <button type="button" className="bd-download" onClick={download} disabled={!src || busy}>{busy ? "Making your PNG…" : "Download PNG"}</button>
+            {!src && <p className="bd-how">Add a picture first, then download it.</p>}
             {saved && <a className="bd-saved" href={saved.url} target="_blank" rel="noreferrer">Didn&rsquo;t download? Open {saved.name} and long-press to save.</a>}
           </div>
         </aside>
