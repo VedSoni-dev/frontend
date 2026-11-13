@@ -31,6 +31,10 @@ const SETS: Record<string, { a: string; b: string; alt: string; aStyle: React.CS
     a: "/site/gait-a.jpg", b: "/site/gait-b.jpg", alt: "Midstance: the motion-capture runner and the halftone load map for a sample session",
     aStyle: { left: "4%", top: "4%", width: "44%", height: "64%" }, bStyle: { left: "52%", top: "30%", width: "44%", height: "66%" }, tag: { left: "52%", top: "6%", width: "34%" },
   },
+  dither: {
+    a: "/site/dither-a.jpg", b: "/site/dither-b.jpg", alt: "backdrop: a sample picture dithered in orange behind a placeholder app screen, and the same picture before and after",
+    aStyle: { left: "4%", top: "4%", width: "64%", height: "48%" }, bStyle: { left: "32%", top: "54%", width: "64%", height: "42%" }, tag: { left: "70%", top: "8%", width: "26%" },
+  },
 };
 
 function CollageSet({ p, on }: { p: Piece; on: boolean }) {
@@ -48,9 +52,9 @@ function CollageSet({ p, on }: { p: Piece; on: boolean }) {
   );
 }
 
-function PieceTile({ p }: { p: Piece }) {
+function PieceTile({ p, wide }: { p: Piece; wide?: boolean }) {
   return (
-    <article className="tile span-6 piece m-zoom" data-hover-play="">
+    <article className={`tile ${wide ? "span-12 piece--wide" : "span-6"} piece m-zoom`} data-hover-play="">
       <a className="tile__media" href={`/${p.path}`} aria-label={p.title} tabIndex={-1}>
         <video src={p.media.video} poster={p.media.poster} muted loop playsInline preload="none" aria-hidden="true" />
       </a>
@@ -68,7 +72,10 @@ function PieceTile({ p }: { p: Piece }) {
 }
 
 export default function Index() {
-  const first = PIECES.slice(0, 2), rest = PIECES.slice(2);
+  // two tiles a row, one row a screen; an odd last piece takes the whole row (media left, words right)
+  const rows: Piece[][] = [];
+  for (let i = 0; i < PIECES.length; i += 2) rows.push(PIECES.slice(i, i + 2));
+  const [first, ...rest] = rows;
   const embeds = PIECES.filter((p) => p.embed);
   return (
     <>
@@ -124,17 +131,19 @@ export default function Index() {
           </div></div>
         </section>
 
-        <section className="section g2" id="pieces" aria-labelledby="pieces-h">
+        <section className="section g2" id="pieces" style={{ ["--h" as string]: rows.length }} aria-labelledby="pieces-h">
           <div className="wrap">
             <div className="group">
               <div className="section-head">
                 <h2 id="pieces-h">The pieces. <span className="muted">Each runs at its own address and copies into your site.</span></h2>
               </div>
-              <div className="grid">{first.map((p) => <PieceTile key={p.path} p={p} />)}</div>
+              <div className="grid">{first.map((p) => <PieceTile key={p.path} p={p} wide={first.length === 1} />)}</div>
             </div>
-            <div className="group">
-              <div className="grid">{rest.map((p) => <PieceTile key={p.path} p={p} />)}</div>
-            </div>
+            {rest.map((row) => (
+              <div className="group" key={row[0].path}>
+                <div className="grid">{row.map((p) => <PieceTile key={p.path} p={p} wide={row.length === 1} />)}</div>
+              </div>
+            ))}
           </div>
         </section>
 

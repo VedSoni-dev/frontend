@@ -20,10 +20,10 @@ const PATTERN_NAMES: Record<Pattern, string> = { bayer8: "Bayer 8×8", bayer4: "
 const SIZES: { id: SizeId; label: string }[] = [
   { id: "screen", label: "My screen" },
   { id: "original", label: "Original" },
-  { id: "1080", label: "1920×1080" },
-  { id: "1440", label: "2560×1440" },
-  { id: "4k", label: "3840×2160" },
-  { id: "phone", label: "Phone 1179×2556" },
+  { id: "phone", label: "Phone" },
+  { id: "1080", label: "Full HD" },
+  { id: "1440", label: "QHD" },
+  { id: "4k", label: "4K" },
 ];
 
 function readSettings(): Settings {
@@ -202,7 +202,8 @@ export default function Backdrop() {
     <div className="bd">
       <header className="bd-top">
         <div className="bd-brand"><span className="bd-mark" aria-hidden="true" />backdrop</div>
-        <p className="bd-credit">The dithered background look from <a href={POST} target="_blank" rel="noreferrer">TheCoderBTW&rsquo;s &ldquo;New look!&rdquo; post</a>, on any picture.</p>
+        <h1 className="bd-title">Turn any picture into a dithered wallpaper.</h1>
+        <p className="bd-credit">The dithered background look from <a href={POST} target="_blank" rel="noreferrer">TheCoderBTW&rsquo;s &ldquo;New look!&rdquo; post</a>.</p>
       </header>
 
       <main className="bd-main">
@@ -236,7 +237,7 @@ export default function Backdrop() {
           {src?.note && status.kind === "ready" && <p className="bd-note">{src.note}</p>}
           <div className="bd-view">
             <button type="button" className={compare ? "on" : ""} aria-pressed={compare} onClick={() => setCompare((v) => !v)}>Before / after</button>
-            <button type="button" className={overlay ? "on" : ""} aria-pressed={overlay} onClick={() => setOverlay((v) => !v)}>Preview as a background</button>
+            <button type="button" className={overlay ? "on" : ""} aria-pressed={overlay} onClick={() => setOverlay((v) => !v)}>As a background</button>
             <button type="button" onClick={nextSample}>Another sample</button>
           </div>
         </section>
@@ -268,6 +269,7 @@ export default function Backdrop() {
             <Slider label="Contrast" value={s.contrast} min={0.5} max={2} step={0.05} show={s.contrast.toFixed(2)} onChange={(v) => set("contrast", v)} />
             <Slider label="Darkness" value={s.darkness} min={0} max={1} step={0.01} show={pct(s.darkness)} onChange={(v) => set("darkness", v)} />
             <Slider label="Mix with original" value={s.mix} min={0} max={1} step={0.01} show={pct(s.mix)} onChange={(v) => set("mix", v)} />
+            <button type="button" className="bd-reset" onClick={() => setS({ ...DEFAULTS })}>Reset to Ember</button>
           </div>
 
           <fieldset className="bd-group">
@@ -281,14 +283,14 @@ export default function Backdrop() {
 
           <fieldset className="bd-group">
             <legend>Size</legend>
-            <div className="bd-chips">
+            <div className="bd-chips bd-sizes">
               {SIZES.map((z) => (
-                <button key={z.id} type="button" className={size === z.id ? "on" : ""} aria-pressed={size === z.id} onClick={() => { setSize(z.id); setSaved(null); }}>{z.label}</button>
+                <button key={z.id} type="button" className={`bd-size${size === z.id ? " on" : ""}`} aria-pressed={size === z.id} onClick={() => { setSize(z.id); setSaved(null); }}>
+                  <span>{z.label}</span><small>{src ? targetSize(z.id, src).join("×") : ""}</small>
+                </button>
               ))}
             </div>
           </fieldset>
-
-          <button type="button" className="bd-reset" onClick={() => setS({ ...DEFAULTS })}>Reset to Ember</button>
 
           <div className="bd-dl">
             <button type="button" className="bd-download" onClick={download} disabled={!src || busy}>{busy ? "Making your PNG…" : "Download PNG"}</button>

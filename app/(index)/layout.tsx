@@ -5,11 +5,11 @@
 //       lit ground sky, radius sharp, palette soot-pale-lime, type instrument (Instrument Sans + DM Mono)
 // moments: pinned-chapters in #how
 import type { Metadata, Viewport } from "next";
-import { SITE } from "@/pieces";
+import { PIECES, SITE } from "@/pieces";
 
 const TITLE = "fork this frontend: free front-end pieces for websites";
 const DESCRIPTION =
-  "A hover-flower garden, a haptic slider, a grain-photo footer and a gait dashboard, rebuilt in code from designs posted on X. Free with a publik account, MIT licensed.";
+  "A hover-flower garden, a haptic slider, a grain-photo footer, a gait dashboard and a dithered-wallpaper maker, rebuilt in code from designs posted on X. Free with a publik account, MIT licensed.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: SITE },
   icons: { icon: { url: "/favicon.svg", type: "image/svg+xml" } },
-  openGraph: { title: TITLE, description: "Four interactive pieces, free to use with a publik account and free to copy under MIT.", url: SITE, type: "website", siteName: "fork this frontend", images: [{ url: "/og.png", width: 1200, height: 630, alt: "fork this frontend" }] },
-  twitter: { card: "summary_large_image", title: TITLE, description: "Four interactive pieces, free to use with a publik account and free to copy under MIT.", images: ["/og.png"] },
+  openGraph: { title: TITLE, description: `${PIECES.length} interactive pieces, free to use with a publik account and free to copy under MIT.`, url: SITE, type: "website", siteName: "fork this frontend", images: [{ url: "/og.png", width: 1200, height: 630, alt: "fork this frontend" }] },
+  twitter: { card: "summary_large_image", title: TITLE, description: `${PIECES.length} interactive pieces, free to use with a publik account and free to copy under MIT.`, images: ["/og.png"] },
   other: { "page-type": "software", "site-kind": "software" },
 };
 
