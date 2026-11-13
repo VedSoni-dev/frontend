@@ -360,7 +360,7 @@ export default function Playground() {
               </div>
             )}
           </div>
-          <p className="muted small foot">free &amp; open source · layout after a design by Faris (@Faris_rzk) · not affiliated with him or his clients</p>
+          <p className="muted small foot">free &amp; open source · layout after a design by Faris (@Faris_rzk) · not affiliated with Faris or any client</p>
         </section>
       </div>
     </div>
