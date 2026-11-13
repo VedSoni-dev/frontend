@@ -13,6 +13,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { StudioProvider } from "@/kit/react/studio";
 import type { GateAction, GateScreen, GateStatus } from "@/kit/ai/publik"; // types only: no server code reaches the browser
+import { PUBLIK_CHEAPER } from "@/kit/ai/types";
 import { piece as findPiece } from "@/pieces";
 import "./gate.css";
 
@@ -78,7 +79,7 @@ export function Gate({ piece: path, children }: { piece: string; children: React
   useEffect(() => {
     const v = video.current;
     if (v && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
-  });
+  }, [status]);
 
   const limitMs = () => last.current?.pollLimitMs ?? 600_000;
   // A piece with no AI has no plan to choose: signed in is enough.
@@ -206,17 +207,17 @@ export function Gate({ piece: path, children }: { piece: string; children: React
             )}
             <div className="fg-buttons">
               {loadingFirst && <span className="fg-btn fg-primary fg-wait" aria-label="Loading"><span className="fg-spin" aria-hidden /></span>}
-              {needsInstall && <button type="button" className="fg-btn fg-primary" disabled={busy} onClick={() => void provision()}>Sign in with publik</button>}
+              {needsInstall && <button type="button" className="fg-btn fg-primary" disabled={busy} onClick={() => void provision()}><SignInLabel /></button>}
               {shown && shown.screen.buttons.map((b, i) => {
                 const cls = `fg-btn ${i === 0 ? "fg-primary" : "fg-secondary"}`;
                 const href = b.action === "sign_in" ? shown.claimUrl : b.action === "get_plan" ? shown.topUpUrl : null;
                 return href ? (
                   <a key={b.action} href={href} target="_blank" rel="noopener noreferrer" className={cls}
                     onClick={() => void act(b.action)} onAuxClick={(e) => { if (e.button === 1) void act(b.action); }}>
-                    {b.label}
+                    {b.action === "sign_in" ? <SignInLabel /> : b.label}
                   </a>
                 ) : (
-                  <button key={b.action} type="button" className={cls} disabled={busy} onClick={() => void act(b.action)}>{b.label}</button>
+                  <button key={b.action} type="button" className={cls} disabled={busy} onClick={() => void act(b.action)}>{b.action === "sign_in" ? <SignInLabel /> : b.label}</button>
                 );
               })}
             </div>
@@ -237,4 +238,9 @@ export function Gate({ piece: path, children }: { piece: string; children: React
       </div>
     </main>
   );
+}
+
+/** "Sign in with publik (20x cheaper than OpenAI and Anthropic)": the kit's line, lighter than the label. */
+function SignInLabel() {
+  return <span className="fg-btn-label">Sign in with publik <span className="fg-btn-aside">({PUBLIK_CHEAPER})</span></span>;
 }

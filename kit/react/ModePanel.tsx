@@ -4,7 +4,7 @@
 //   <ModeGate>      wraps the app's main surface; shows the picker inline until a mode is ready.
 //   <ModePanel />   the cards themselves, for a settings page.
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { Mode, ModeStatus } from "../ai/types";
+import { PUBLIK_CHEAPER, type Mode, type ModeStatus } from "../ai/types";
 import { useStudio } from "./studio";
 
 const ICON: Record<Mode, ReactNode> = {
@@ -192,7 +192,7 @@ function PublikBody({ m }: { m: ModeStatus }) {
       : <button type="button" className="sk-btn" onClick={() => s.publikChoose("publik")}>Connect your plan</button>;
   }
   if (g.state === "needs_install" || (g.state === "sign_in" && !g.screen)) {
-    return <button type="button" className="sk-btn" onClick={() => s.publikSignIn()}>Sign in with publik</button>;
+    return <button type="button" className="sk-btn" onClick={() => s.publikSignIn()}><PublikSignInLabel /></button>;
   }
   const screen = g.screen!;
   return (
@@ -207,11 +207,16 @@ function PublikBody({ m }: { m: ModeStatus }) {
             else if (b.action === "get_plan") { if (g.topUpUrl) window.open(g.topUpUrl, "_blank", "noopener"); }
             else if (b.action === "connect") void s.publikChoose("publik");
             else if (b.action === "own_key") void s.publikChoose("own_key");
-          }}>{b.label}</button>
+          }}>{b.action === "sign_in" ? <PublikSignInLabel /> : b.label}</button>
         ))}
       </div>
     </div>
   );
+}
+
+/** "Sign in with publik (20x cheaper than OpenAI and Anthropic)": the aside is lighter than the label. */
+function PublikSignInLabel() {
+  return <>Sign in with publik <span className="sk-btn-aside">({PUBLIK_CHEAPER})</span></>;
 }
 
 function Copy({ text }: { text: string }) {

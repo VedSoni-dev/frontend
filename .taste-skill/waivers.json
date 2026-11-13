@@ -1,0 +1,17 @@
+[
+ {
+  "check": "empty-visual",
+  "target": "div.grid.fill > div.span-6.start-7 > seedbed-garden.embed__garden > canvas",
+  "reason": "the live <seedbed-garden> at rest is the product's own dot grid on its paper colour (the design's look: the dots are the picture); it sweeps once into bloom when it first comes into view and blooms under the pointer, then wilts back to dots, so a still capture after the sweep shows the dots"
+ },
+ {
+  "check": "same-action",
+  "target": "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary",
+  "reason": "footer-statement on a dark page: system.css draws the close's primary in the lit ground's ink (the sky slab), because the page's lime fill reads about 1.1:1 on the sky ground; the label, target and shape are the same everywhere"
+ },
+ {
+  "check": "same-action",
+  "target": "nav.actionbar > a.btn.btn--primary",
+  "reason": "the same finding as the nav's: on this dark page the footer-statement slab draws the close's primary in the sky ground's ink (system.css), so the phone bar's lime button and the close's dark one differ in fill only; label, target and shape match"
+ }
+]

@@ -12,36 +12,58 @@
 .pc-tag b { font: 500 max(14px, 2.8cqw)/1.15 var(--font-display); letter-spacing: -0.01em; }
 .pc-tag code { font: 400 max(13px, 2.1cqw)/1.2 var(--font-mono); color: #5f5f5f; }
 
-/* the piece tiles: the real preview loop (a still poster until the pointer rests on the tile) */
-.piece .tile__media { --tile-ratio: 16 / 9; border: 1px solid var(--line); }
+/* the piece tiles: the real preview loop (a still poster until the pointer rests on the tile); one media height for every
+   tile, set so each of the section's two screens holds its row (and the h2 on the first) */
+.piece { --media-h: min(40svh, 360px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s-3) var(--s-3) var(--s-5); gap: var(--s-3); transition: border-color 180ms var(--ease, ease); }
+.piece:hover { border-color: var(--line-strong); }
+.piece > :not(.tile__media) { margin-inline: var(--s-3); }
+.piece .tile__media { aspect-ratio: auto; height: var(--media-h); border-radius: var(--r-md); }
 .piece .tile__media > video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .piece .tile__head h3 a { color: inherit; text-decoration: none; }
 .piece .tile__head h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .piece .tile__price { font-family: var(--font-mono); font-size: var(--t-small); color: var(--muted); }
 .piece__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-5); margin: 0; font-size: var(--t-small); color: var(--muted); }
-.piece__meta a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--line-strong); min-height: 24px; display: inline-flex; align-items: center; }
+.piece__meta a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
 .piece__meta a:hover { text-decoration-color: currentColor; }
 
-/* #embed: the files, the snippet, and the same files running live in the frame */
+/* #embed: the files, the snippet, and the same files running live */
 .embed__text { display: flex; flex-direction: column; gap: var(--s-6); min-width: 0; }
 .embed .rows__value, .credits__rows .rows__value { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink); align-self: center; }
-.embed__code { margin: 0; padding: var(--s-5); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); overflow-x: auto; font: 400 14px/1.6 var(--font-mono); color: var(--ink); }
-.embed__live { display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-5); background: var(--ground-bg); border-radius: var(--r-lg); border: 0; min-height: 420px; }
-.embed__garden { display: block; flex: 1 1 auto; min-height: 260px; height: auto !important; border-radius: var(--r-md); overflow: hidden; background: #f7f1e3; }
-.embed__slider { flex: none; padding: var(--s-5) var(--s-6); border-radius: var(--r-md); background: #fff; color: #141413; }
+.embed__code { margin: 0; padding: var(--s-5); border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line); font: 400 14px/1.6 var(--font-mono); color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+.embed__live { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--s-4); padding: var(--s-5); background: var(--ground-bg); border-radius: var(--r-lg); min-height: 420px; }
+.embed__garden { display: block; width: 100%; height: 100% !important; min-height: 240px; border-radius: var(--r-md); overflow: hidden; background: #f7f1e3; }
+.embed__slider { padding: var(--s-5) var(--s-6); border-radius: var(--r-md); background: #fff; color: #1b1a17; }
+#embed .embed__slider .dt { --dt-ink: #1b1a17; --dt-muted: #7a766d; --dt-rail: #e4e1d9; --dt-tick: #b9b4a8; --dt-cap: #fbfaf7; --dt-cap-edge: #d8d4ca; --dt-ridge: #b3aea2; --dt-focus: #1b1a17; }
 
-/* #credits */
+/* #credits: the text and its two buttons left, the pieces with their icons right */
 .credits__text p { color: var(--ink); max-width: 52ch; }
-.credits__links { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); }
+.credits__rows .rows__name { display: flex; align-items: center; gap: var(--s-4); }
+.credits__rows .rows__name > img { width: 32px; height: 32px; border-radius: 8px; flex: none; background: #fff; }
 .credits__rows .rows__name small { display: block; font-weight: 400; color: var(--muted); font-size: var(--t-small); margin-top: var(--s-1); }
 .credits__rows .rows__name small a { color: var(--ink); text-underline-offset: 3px; }
+.credits__actions { align-self: end; }
+@media (min-width: 1024px) { .credits__rows { grid-row: 1 / span 2; } .credits__actions { grid-column: 1 / span 6; } }
 
-@media (max-width: 1023px) {
-  .embed__live { min-height: 360px; }
+/* the close's name, hand-set to run from line to line (system.css sizes it for a short name) */
+.close--word { container-type: inline-size; }
+.close--word .close__word { font-size: calc(100cqw * 0.134); line-height: 1.04; white-space: nowrap; }   /* the name is 7.26 em wide in the display face */
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .piece { --media-h: 30svh; }
+  #how .mo-pc__visual > img { max-height: 21svh; }
 }
 @media (max-width: 639px) {
-  .embed__live { min-height: 0; padding: var(--s-4); }
-  .embed__garden { min-height: 200px; }
-  .embed__code { font-size: 13px; }
+  .piece { --media-h: auto; padding-bottom: var(--s-3); }
+  .piece .tile__media { aspect-ratio: 2 / 1; height: auto; }
+  .piece .piece__line, .piece .piece__meta > a { display: none; }
+  .piece .tile__head h3 a, .piece__meta a, .credits__rows .rows__value, .credits__rows small a { display: inline-flex; align-items: center; min-height: 44px; }
+  /* the pinned steps at rest stand on two whole screens, so the next section never peeks into the second */
+  main > #how[data-moment]:not(.is-live) { min-height: calc(2 * 100vh); min-height: calc(2 * 100lvh); }
+  #embed .grid.fill { flex: none; }
+  .embed__live { min-height: 0; padding: var(--s-4); grid-template-rows: auto auto; }
+  .embed__garden { min-height: 150px; height: 150px !important; }
+  .embed__code { display: none; }
+  .embed .rows > li { grid-template-columns: minmax(0, 1fr); padding-block: var(--s-3); }
+  .embed .rows .rows__value { grid-column: 1; grid-row: auto; align-self: start; justify-self: start; }
   .piece__meta { justify-content: flex-start; }
 }

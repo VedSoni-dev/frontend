@@ -74,6 +74,9 @@ export interface ModeStatus {
   extra?: Record<string, unknown>;
 }
 
+/** Said next to every "Sign in with publik" button (kit mode picker, the hub's gate, a build's own gate). */
+export const PUBLIK_CHEAPER = "20x cheaper than OpenAI and Anthropic";
+
 export const MODE_COPY: Record<Mode, { label: string; blurb: string }> = {
   local: { label: "Local model", blurb: "Runs on your computer with Ollama or LM Studio. Free and private." },
   chatgpt: { label: "ChatGPT plan", blurb: "Sign in with ChatGPT and use your Plus or Pro plan. No API key." },

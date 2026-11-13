@@ -71,6 +71,8 @@
 .sk-btn:active { transform: scale(.97); transition-timing-function: var(--spring); }
 .sk-btn:focus-visible, .sk-pill:focus-visible, .sk-icon-btn:focus-visible { outline: none; box-shadow: var(--focus); }
 .sk-btn:disabled { opacity: .5; cursor: default; transform: none; }
+.sk-btn:has(.sk-btn-aside) { flex-wrap: wrap; column-gap: .3em; row-gap: .2rem; max-width: 100%; padding-block: .6rem; line-height: 1.2; text-align: center; white-space: normal; } /* wraps on a phone even where a build sets .sk-btn nowrap */
+.sk-btn-aside { font-weight: 400; opacity: .72; }
 .sk-btn-quiet { background: transparent; color: var(--fg); border-color: var(--line); }
 .sk-btn-quiet:hover { background: var(--bg-2); }
 .sk-btn-chatgpt { background: #0d0d0d; color: #fff; }

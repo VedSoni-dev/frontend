@@ -50,17 +50,17 @@ function CollageSet({ p, on }: { p: Piece; on: boolean }) {
 
 function PieceTile({ p }: { p: Piece }) {
   return (
-    <article className="tile tile--wide span-6 piece" data-hover-play="">
-      <a className="tile__media m-zoom" href={`/${p.path}`} aria-label={p.what} tabIndex={-1}>
+    <article className="tile span-6 piece m-zoom" data-hover-play="">
+      <a className="tile__media" href={`/${p.path}`} aria-label={p.title} tabIndex={-1}>
         <video src={p.media.video} poster={p.media.poster} muted loop playsInline preload="none" aria-hidden="true" />
       </a>
       <div className="tile__head">
-        <h3><a href={`/${p.path}`}>{p.what}</a></h3>
+        <h3><a href={`/${p.path}`}>{p.title}</a></h3>
         <span className="tile__price">/{p.path}</span>
       </div>
-      <p>{p.line}</p>
+      <p className="piece__line">{p.line}</p>
       <p className="piece__meta">
-        <span>After <a href={p.credit.url} target="_blank" rel="noopener noreferrer">{p.credit.name}</a></span>
+        <span>{p.name}, after <a href={p.credit.url} target="_blank" rel="noopener noreferrer">{p.credit.name}</a></span>
         <a href={p.repo} target="_blank" rel="noopener noreferrer">{short(p.repo)}</a>
       </p>
     </article>
@@ -188,8 +188,8 @@ export default function Index() {
 <div data-detent data-label="How was it?"
   data-min="0" data-max="10" data-value="7"></div>`}</code></pre>
               </div>
-              <div className="span-6 start-7 frame frame--fill embed__live" data-visual="">
-                <seedbed-garden preset="meadow" radius="150" className="embed__garden" />
+              <div className="span-6 start-7 embed__live" data-visual="">
+                <seedbed-garden preset="meadow" radius="150" className="embed__garden" role="img" aria-label="A seedbed garden: move across the dots and flowers grow" />
                 <div className="embed__slider">
                   <div data-detent="" data-label="How was it?" data-min="0" data-max="10" data-step="0.1" data-value="7" />
                 </div>
@@ -207,19 +207,19 @@ export default function Index() {
               <div className="span-6 stack-5 credits__text">
                 <p>fork this (@forkthis_ai) is an AI that runs its own X account. When someone posts a design, it rebuilds it from scratch as free, open-source code and puts the front-end ones here.</p>
                 <p>The code, the drawings and the copy are new. No original code, logo or brand is used, and each repo says so.</p>
-                <p className="credits__links">
-                  <a className="link" href="https://x.com/forkthis_ai" target="_blank" rel="noopener noreferrer">Follow fork this on X</a>
-                  <a className="link" href={REPO} target="_blank" rel="noopener noreferrer">Read this site&apos;s source</a>
-                </p>
               </div>
               <ul className="rows span-6 start-7 credits__rows">
                 {PIECES.map((p) => (
                   <li key={p.path}>
-                    <span className="rows__name">{p.what}<small>After <a href={p.credit.url} target="_blank" rel="noopener noreferrer">{p.credit.name}</a> · MIT</small></span>
+                    <span className="rows__name"><img src={`/${p.path}/icon.svg`} alt="" width={32} height={32} /><span>{p.what}<small>After <a href={p.credit.url} target="_blank" rel="noopener noreferrer">{p.credit.name}</a> · MIT</small></span></span>
                     <a className="rows__value" href={p.repo} target="_blank" rel="noopener noreferrer">{p.name}</a>
                   </li>
                 ))}
               </ul>
+              <div className="span-6 btn-row credits__actions">
+                <a className="btn btn--secondary" href="https://x.com/forkthis_ai" target="_blank" rel="noopener noreferrer">Follow fork this on X</a>
+                <a className="btn btn--secondary" href={REPO} target="_blank" rel="noopener noreferrer">Read the site&apos;s code</a>
+              </div>
             </div>
           </div>
         </section>
@@ -243,7 +243,7 @@ export default function Index() {
               <div className="span-2 footer__col"><h3>Pieces</h3><ul>{PIECES.map((p) => <li key={p.path}><a href={`/${p.path}`}>/{p.path}</a></li>)}</ul></div>
               <div className="span-2 footer__col"><h3>Sign-in</h3><ul><li><a href="#how">How it works</a></li><li><a href="https://publikhq.com" target="_blank" rel="noopener noreferrer">publik</a></li></ul></div>
               <div className="span-2 footer__col"><h3>Embed</h3><ul>{embeds.map((p) => <li key={p.path}><a href={p.embed!.href}>{p.embed!.label}</a></li>)}</ul></div>
-              <div className="span-2 footer__col"><h3>Credits</h3><ul><li><a href="#credits">Designers</a></li><li><a href={REPO} target="_blank" rel="noopener noreferrer">Source code</a></li><li><a href="https://x.com/forkthis_ai" target="_blank" rel="noopener noreferrer">fork this on X</a></li></ul></div>
+              <div className="span-2 footer__col"><h3>Credits</h3><ul><li><a href="#credits">Designers</a></li><li><a href={REPO} target="_blank" rel="noopener noreferrer">Read the site&apos;s code</a></li><li><a href="https://x.com/forkthis_ai" target="_blank" rel="noopener noreferrer">Follow fork this on X</a></li></ul></div>
             </div>
             <div className="footer__legal">
               <span>&copy; 2026 fork this frontend · MIT licence</span>
@@ -252,6 +252,9 @@ export default function Index() {
           </div>
         </div>
       </footer>
+      <nav className="actionbar" aria-label="Quick actions">
+        <a className="btn btn--primary" href="#pieces">{MAIN_ACTION}</a>
+      </nav>
       <KitScripts />
     </>
   );

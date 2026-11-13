@@ -8,6 +8,9 @@ export default async function ({ page, go, click, type, wait, shot }) {
     for (const [fx, fy] of path) { await page.mouse.move(b.x + b.width * fx, b.y + b.height * fy, { steps: 6 }); await page.waitForTimeout(16); }
   };
 
+  // one recording: the sign-in page opens in this tab's place, never as a pop-up (capture.mjs keeps one video)
+  await page.addInitScript(() => { window.open = () => null; });
+
   // the index: the collage of the four pieces, then the cards
   await go("/");
   await wait(1200);
@@ -24,8 +27,7 @@ export default async function ({ page, go, click, type, wait, shot }) {
   await click("button.fg-primary");
   await wait(2500);
   const claim = await page.locator('a.fg-btn[href*="/claim"]').first().getAttribute("href").catch(() => null);
-  if (claim) await page.request.get(claim); // the mock's sign-in page
-  for (const p of page.context().pages()) if (p !== page) await p.close();
+  if (claim) await page.request.get(claim); // the mock's sign-in page; the gate's poll sees it within 3 s
   await page.locator("text=Choose how to pay for AI").waitFor({ timeout: 20000 });
   await wait(600);
   await click("button.fg-secondary"); // Use my own key: the tools open; the AI pill offers the kit's picker

@@ -26,8 +26,20 @@ export function KitScripts() {
       s.src = e.src;
       document.body.append(s);
     }
+    // The live garden in #embed sweeps once when it first comes into view, so it shows its flowers without a pointer.
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const garden = document.querySelector<HTMLElement & { garden?: { sweep(): void } }>("#embed seedbed-garden");
+    let io: IntersectionObserver | null = null;
+    if (garden && !still && "IntersectionObserver" in window) {
+      io = new IntersectionObserver((entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        const go = () => (garden.garden ? garden.garden.sweep() : setTimeout(go, 200));
+        go(); io?.disconnect();
+      }, { threshold: 0.5 });
+      io.observe(garden);
+    }
     const hover = matchMedia("(hover: hover) and (pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!hover) return;
+    if (!hover) return () => io?.disconnect();
     const offs: (() => void)[] = [];
     document.querySelectorAll<HTMLElement>("[data-hover-play]").forEach((card) => {
       const v = card.querySelector("video");
@@ -40,7 +52,7 @@ export function KitScripts() {
       card.addEventListener("focusout", stop);
       offs.push(() => { card.removeEventListener("pointerenter", play); card.removeEventListener("pointerleave", stop); card.removeEventListener("focusin", play); card.removeEventListener("focusout", stop); });
     });
-    return () => offs.forEach((f) => f());
+    return () => { io?.disconnect(); offs.forEach((f) => f()); };
   }, []);
   return null;
 }

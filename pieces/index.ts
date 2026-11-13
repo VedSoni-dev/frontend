@@ -13,8 +13,10 @@ export interface Piece {
   path: string;
   /** The tool's own name (its open-source repo's name). */
   name: string;
-  /** What it is, in a few words: the card title and the page title. */
+  /** What it is, in a few words: the page title and the gate. */
   what: string;
+  /** What it does, as a verb and an object: the card title on the index. */
+  title: string;
   /** One plain line: what a person does with it. */
   line: string;
   /** The original design it was rebuilt from, credited on the card, the gate and the README. */
@@ -41,6 +43,7 @@ export const PIECES: Piece[] = [
     path: "flowers",
     name: "seedbed",
     what: "Flower hover effect",
+    title: "Grows flowers under the cursor",
     line: "Move across a grid of dots and flowers grow out of it, then wilt back. Five styles, copied into your site as one file.",
     credit: { name: "Mohamed Siddique", handle: "msiddique26", url: "https://x.com/msiddique26/status/2120936635856752710", work: "his “let's see what blooms” post" },
     repo: "https://github.com/VedSoni-dev/seedbed",
@@ -53,6 +56,7 @@ export const PIECES: Piece[] = [
     path: "slider",
     name: "detent",
     what: "Haptic slider",
+    title: "Clicks at every whole number",
     line: "A slider that clicks at every whole number on a phone. Tune its range, colour and cap, then paste it into your app.",
     credit: { name: "Max Yan", handle: "MlXZY88", url: "https://x.com/MlXZY88/status/2120973389498098103", work: "his haptic slider design" },
     repo: "https://github.com/VedSoni-dev/detent",
@@ -65,6 +69,7 @@ export const PIECES: Piece[] = [
     path: "footer",
     name: "grainfoot",
     what: "Footer with a grain photo band",
+    title: "Adds print grain to footer photos",
     line: "A drop-in site footer whose photo band gets a matte print grain. List your image paths, tune the grain, copy one file.",
     credit: { name: "Faris", handle: "Faris_rzk", url: "https://x.com/Faris_rzk", work: "his footer design" },
     repo: "https://github.com/VedSoni-dev/grainfoot",
@@ -77,6 +82,7 @@ export const PIECES: Piece[] = [
     path: "gait",
     name: "Midstance",
     what: "Gait-lab dashboard",
+    title: "Draws a running session live",
     line: "Type in a running session's numbers and get a live halftone load map, a motion-capture runner and a protocol.",
     credit: { name: "Praveen Kumar", handle: "praveenisomer", url: "https://x.com/praveenisomer", work: "his gait-lab dashboard reel" },
     repo: "https://github.com/VedSoni-dev/midstance",
