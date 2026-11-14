@@ -10,12 +10,12 @@ export const TIMES = ["dawn", "noon", "dusk", "night"];
 export const GLYPH_SETS = ["ascii", "dots", "blocks"];
 
 // Our own palettes: sky ramp from deep to pale (top to bottom), the dot inside each cell, cloud fill, cloud edge type,
-// the wind's blue, the page colour the sky fades into, and stars (night only).
+// the wind's blue (written on its wake, the cell it clears), the page colour the sky fades into, and stars (night only).
 export const PALETTES = {
-  dawn: { sky: ["#8fb4dc", "#a9c6e6", "#c7d8ee", "#e9dfe8"], dot: "#6f90bd", cloud: "#fff8f3", edge: "#8a7f9e", trail: "#3f5fd8", page: "#fbf8f6", stars: null },
-  noon: { sky: ["#4ea4dc", "#74bae6", "#9dd0ef", "#c6e4f6"], dot: "#2f86c6", cloud: "#ffffff", edge: "#6684a3", trail: "#1652e0", page: "#fbfcfd", stars: null },
-  dusk: { sky: ["#3d4f8f", "#6c6aa6", "#b88aa8", "#f0b99a"], dot: "#2d3a74", cloud: "#ffe9dc", edge: "#7d5f86", trail: "#ffd166", page: "#fbf3ee", stars: null },
-  night: { sky: ["#0b1530", "#11204a", "#182b5c", "#22386e"], dot: "#2a427e", cloud: "#2c3d6e", edge: "#7d93c9", trail: "#9ec5ff", page: "#0d1222", stars: "#e8eeff" },
+  dawn: { sky: ["#8fb4dc", "#a9c6e6", "#c7d8ee", "#e9dfe8"], dot: "#6f90bd", cloud: "#fff8f3", edge: "#8a7f9e", wake: "#fff8f3", trail: "#3f5fd8", page: "#fbf8f6", stars: null },
+  noon: { sky: ["#4ea4dc", "#74bae6", "#9dd0ef", "#c6e4f6"], dot: "#2f86c6", cloud: "#ffffff", edge: "#6684a3", wake: "#ffffff", trail: "#1652e0", page: "#fbfcfd", stars: null },
+  dusk: { sky: ["#3d4f8f", "#6c6aa6", "#b88aa8", "#f0b99a"], dot: "#2d3a74", cloud: "#ffe9dc", edge: "#7d5f86", wake: "#2d3a74", trail: "#ffd166", page: "#fbf3ee", stars: null },
+  night: { sky: ["#0b1530", "#11204a", "#182b5c", "#22386e"], dot: "#2a427e", cloud: "#2c3d6e", edge: "#7d93c9", wake: "#0b1530", trail: "#9ec5ff", page: "#0d1222", stars: "#e8eeff" },
 };
 
 // Cloud edges, thin to thick. Each step lists its look-alikes, picked by a per-cell hash so edges don't repeat.
@@ -106,7 +106,7 @@ function paint(ctx, g, cfg, t, field, trail, atlas) {
   for (let i = 0; i < field.n; i++) {
     const x = (i % cols) * cw, y = ((i / cols) | 0) * ch;
     const ti = trail ? trail.I[i] : 0;
-    if (ti > 0.04) { ctx.globalAlpha = Math.min(1, ti * 1.5); atlas.draw(ctx, TRAIL_GLYPHS[trail.D[i]], "trail", x, y); ctx.globalAlpha = 1; continue; }
+    if (ti > 0.04) { ctx.globalAlpha = Math.min(1, ti * 1.6) * 0.92; ctx.fillStyle = pal.wake; ctx.fillRect(x, y, cw - gap, ch - gap); ctx.globalAlpha = Math.min(1, ti * 1.5); atlas.draw(ctx, TRAIL_GLYPHS[trail.D[i]], "trail", x, y); ctx.globalAlpha = 1; continue; }
     let kind = field.kind[i], d = field.dens[i];
     if (kind === 2 && ti > 0.01) { kind = 1; d = 0.95; } // the wind breaks a cloud into characters near it
     if (kind === 1) {

@@ -9,7 +9,7 @@ import { PIECES, SITE } from "@/pieces";
 
 const TITLE = "fork this frontend: free front-end pieces for websites";
 const DESCRIPTION =
-  "A hover-flower garden, a haptic slider, a grain-photo footer, a gait dashboard, a dithered-wallpaper maker, a photo-melting card maker, a 3D shoal of pixel sharks and a footer with a glass bubble over its wordmark, rebuilt in code from designs posted on X. Free with a publik account, MIT licensed.";
+  "A hover-flower garden, a haptic slider, a grain-photo footer, a gait dashboard, a dithered-wallpaper maker, a photo-melting card maker, a 3D shoal of pixel sharks, a footer with a glass bubble over its wordmark and a live sky drawn in tiny characters, rebuilt in code from designs posted on X. Free with a publik account, MIT licensed.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),

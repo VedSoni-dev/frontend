@@ -1,7 +1,7 @@
 export type SkyTime = "dawn" | "noon" | "dusk" | "night";
 export type SkyGlyphs = "ascii" | "dots" | "blocks";
 export interface SkyConfig { v: 1; seed: number; time: SkyTime; cover: number; wind: number; speed: number; cell: number; glyphs: SkyGlyphs; trail: boolean; gust: boolean; fade: boolean }
-export interface SkyPalette { sky: string[]; dot: string; cloud: string; edge: string; trail: string; page: string; stars: string | null }
+export interface SkyPalette { sky: string[]; dot: string; cloud: string; edge: string; wake: string; trail: string; page: string; stars: string | null }
 export interface Sky { readonly config: SkyConfig; set(next: Partial<SkyConfig>): void; frame(): void; toPNG(w: number, h: number): Promise<Blob | null>; destroy(): void }
 export const DEFAULTS: SkyConfig;
 export const TIMES: SkyTime[];

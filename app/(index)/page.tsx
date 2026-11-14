@@ -46,6 +46,9 @@ const SETS: Record<string, { a: string; b: string; alt: string; aStyle: React.CS
   bubble: {
     a: "/site/bubble-a.jpg", b: "/site/bubble-b.jpg", alt: "suds: a glass bubble magnifying the letters of a giant footer wordmark, and the same footer in light with its own word and the controls open",
     aStyle: { left: "4%", top: "4%", width: "68%", height: "50%" }, bStyle: { left: "28%", top: "54%", width: "68%", height: "42%" }, tag: { left: "76%", top: "10%", width: "20%" },
+  },  sky: {
+    a: "/site/sky-a.jpg", b: "/site/sky-b.jpg", alt: "cirrus: a noon sky drawn in tiny characters with the wind's trail across it, and the same sky at night with its controls open",
+    aStyle: { left: "4%", top: "4%", width: "68%", height: "50%" }, bStyle: { left: "28%", top: "54%", width: "68%", height: "42%" }, tag: { left: "4%", top: "60%", width: "22%" },
   },
 };
 
