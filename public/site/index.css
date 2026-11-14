@@ -123,7 +123,14 @@
 /* from 1280 the second screen's one row of cards (4:3 posters, which keep each burned-in headline whole) sits a little
    under the middle of its screen, not at its top, so the space under it before "Free with one publik sign-in" stays
    near the page's other gaps between sections instead of a 550px empty band */
+/* the first screen stays one screen; the second grows past its screen when its rows need more, so a row of
+   cards never runs under "Free with one publik sign-in" (two rows of four at 1280-1920 do) */
 @media (min-width: 1280px) {
+  main > #pieces.g2 { height: auto; min-height: calc(2 * 100vh); min-height: calc(2 * 100svh); }
+  main > #pieces.g2 > .wrap {
+    height: auto;
+    grid-template-rows: calc(100svh - var(--padt) - var(--padb) - var(--bar)) minmax(calc(100svh - var(--padt) - var(--padb) - var(--bar)), auto);
+  }
   main > #pieces.g2 > .wrap > .group:last-child { justify-content: center; padding-top: var(--s-8); }
   #pieces .group:last-child .tile.span-3 .tile__media { aspect-ratio: 4 / 3; }
 }

@@ -99,7 +99,8 @@ export default function Index() {
   // the section is the kit's two screens: the h2 and two tiles on the first, the rest side by side on the second
   // (three a row at span-4, four at span-3), so an odd count never leaves a lone tile over empty ground
   // the first screen takes two tiles (or three, when two would leave the rest unable to fill whole rows of four or three)
-  const fills = (n: number) => n % 4 === 0 || n % 3 === 0 || n <= 2;
+  // whole rows, and never more than two of them, so the second group stays inside its one screen
+  const fills = (n: number) => n <= 2 || (n % 4 === 0 && n <= 8) || (n % 3 === 0 && n <= 6);
   const lead = fills(PIECES.length - 2) ? 2 : 3;
   const first = PIECES.slice(0, lead), rest = PIECES.slice(lead);
   const firstSpan = lead === 2 ? 6 : 4;
