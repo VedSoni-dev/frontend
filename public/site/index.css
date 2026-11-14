@@ -35,20 +35,34 @@
 .embed__slider { padding: var(--s-5) var(--s-6); border-radius: var(--r-md); background: #fff; color: #1b1a17; }
 #embed .embed__slider .dt { --dt-ink: #1b1a17; --dt-muted: #7a766d; --dt-rail: #e4e1d9; --dt-tick: #b9b4a8; --dt-cap: #fbfaf7; --dt-cap-edge: #d8d4ca; --dt-ridge: #b3aea2; --dt-focus: #1b1a17; }
 
-/* #credits: the text and its two buttons left, the pieces with their icons right */
+/* #credits: the text, the pieces with their icons, then its two buttons (the phone and tablet order) */
 .credits__text p { color: var(--ink); max-width: 52ch; }
 .credits__rows .rows__name { display: flex; align-items: center; gap: var(--s-4); }
 .credits__rows .rows__name > img { width: 32px; height: 32px; border-radius: 8px; flex: none; background: #fff; }
 .credits__rows .rows__name small { display: block; font-weight: 400; color: var(--muted); font-size: var(--t-small); margin-top: var(--s-1); }
 .credits__rows .rows__name small a { color: var(--ink); text-underline-offset: 3px; }
 .credits__actions { align-self: end; }
-@media (min-width: 1024px) { .credits__rows { grid-row: 1 / span 2; } .credits__actions { grid-column: 1 / span 6; } }
-/* seven pieces and counting: from 1024 the rows sit closer (8px over and under each), so the list, and the buttons
-   on its last line, end inside the screen's padding instead of running down to the footer */
+/* from 1024: the heading left, the text and its buttons beside it, then every piece in two columns under both, three
+   once two would run past one screen (11 pieces under 1440, 13 at 1440 and up). A new piece adds a row sideways
+   instead of pushing the list into the footer: at 1440x900 it holds 18, at 1280x800 and 1366x768 it holds 12. */
 @media (min-width: 1024px) {
-  .credits__rows > li { padding-block: var(--s-2); }
-  .credits__rows > li:first-child { padding-top: 0; }
+  #credits .wrap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-8); align-content: start; }
+  #credits .section-head { grid-column: 1; grid-row: 1 / span 2; margin-bottom: 0; }
+  #credits .wrap > .grid { display: contents; }
+  #credits .credits__text { grid-column: 2; grid-row: 1; }
+  #credits .credits__actions { grid-column: 2; grid-row: 2; align-self: start; margin-top: var(--s-5); }
+  #credits .credits__rows { grid-column: 1 / -1; grid-row: 3; margin-top: var(--s-8); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-8); align-content: start; }
+  #credits .credits__rows > li { padding-block: var(--s-3); }
+  #credits .credits__rows > li:nth-child(-n + 2) { padding-top: 0; }
   .credits__rows .rows__name small { margin-top: 2px; }
+}
+@media (min-width: 1280px) and (max-width: 1439px) {
+  #credits .credits__rows:has(> li:nth-child(11)) { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--s-6); }
+  #credits .credits__rows:has(> li:nth-child(11)) > li:nth-child(3) { padding-top: 0; }
+}
+@media (min-width: 1440px) {
+  #credits .credits__rows:has(> li:nth-child(13)) { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--s-6); }
+  #credits .credits__rows:has(> li:nth-child(13)) > li:nth-child(3) { padding-top: 0; }
 }
 
 /* the close's name, hand-set to run from line to line (system.css sizes it for a short name) */
