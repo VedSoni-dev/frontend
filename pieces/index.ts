@@ -128,6 +128,19 @@ export const PIECES: Piece[] = [
     media: media("sharks"),
     theme: { light: "#05080c", dark: "#05080c" },
   },
+  {
+    path: "bubble",
+    name: "suds",
+    what: "Footer with a glass bubble lens",
+    title: "Puts a glass bubble over your wordmark",
+    line: "A footer whose giant word sits under a glass bubble that follows the cursor and magnifies the letters. Type your word and links, copy one file.",
+    credit: { name: "Alex Marin", handle: "alexmarin", url: "https://x.com/alexmarin/status/2121270486214521306", work: "the “I'm doing something” footer video" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/bubble",
+    usesAi: false,
+    embed: { label: "suds.js", href: "/bubble/suds.js" },
+    media: media("bubble"),
+    theme: { light: "#0a0b0d", dark: "#0a0b0d" },
+  },
 ];
 
 export function piece(path: string): Piece {
