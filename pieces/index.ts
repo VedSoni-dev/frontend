@@ -154,6 +154,19 @@ export const PIECES: Piece[] = [
     media: media("sky"),
     theme: { light: "#4ea4dc", dark: "#0d1222" },
   },
+  {
+    path: "glass",
+    name: "vellum",
+    what: "Frosted-glass footer with clear letters",
+    title: "Cuts your word into frosted glass",
+    line: "A footer that rises over your photo as frosted glass, with your word cut through it as clear glass. Your word, your photo, copy one file.",
+    credit: { name: "Sonia Tkachuk", handle: "sonia_axion", url: "https://x.com/sonia_axion/status/2121301089458987125", work: "a footer design" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/glass",
+    usesAi: false,
+    embed: { label: "Glass.tsx", href: "/glass/Glass.tsx" },
+    media: media("glass"),
+    theme: { light: "#ecebef", dark: "#0f1016" },
+  },
 ];
 
 export function piece(path: string): Piece {
