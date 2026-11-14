@@ -167,6 +167,19 @@ export const PIECES: Piece[] = [
     media: media("glass"),
     theme: { light: "#ecebef", dark: "#0f1016" },
   },
+  {
+    path: "meadow",
+    name: "loam",
+    what: "Living flower meadow in a planter",
+    title: "Keeps a living meadow in a planter",
+    line: "A living flower planter you can put on your site or your desk: it sways on its own, parts when you move through it, and takes a glass lens. Pick the flowers, copy one file.",
+    credit: { name: "Rishi", handle: "that_rishi07", url: "https://x.com/that_rishi07/status/2121338147187425617", work: "the living flower meadow post" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/meadow",
+    usesAi: false,
+    embed: { label: "loam.js", href: "/meadow/loam.js" },
+    media: media("meadow"),
+    theme: { light: "#d9c8b3", dark: "#d9c8b3" },
+  },
 ];
 
 export function piece(path: string): Piece {

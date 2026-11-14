@@ -55,6 +55,10 @@ const SETS: Record<string, { a: string; b: string; alt: string; aStyle: React.CS
     a: "/site/glass-a.jpg", b: "/site/glass-b.jpg", alt: "vellum: a frosted-glass footer over a blurred photo with the word Lumen cut through it as clear glass, and the same footer on another photo with its own word and the controls open",
     aStyle: { left: "4%", top: "4%", width: "68%", height: "50%" }, bStyle: { left: "28%", top: "54%", width: "68%", height: "42%" }, tag: { left: "76%", top: "10%", width: "20%" },
   },
+  meadow: {
+    a: "/site/meadow-a.jpg", b: "/site/meadow-b.jpg", alt: "loam: a wooden planter full of poppies, daisies, cornflowers and buttercups on stone tiles, and a square planter on a desk with the glass lens over it",
+    aStyle: { left: "4%", top: "4%", width: "64%", height: "52%" }, bStyle: { left: "32%", top: "50%", width: "64%", height: "46%" }, tag: { left: "4%", top: "62%", width: "22%" },
+  },
 };
 
 function CollageSet({ p, on }: { p: Piece; on: boolean }) {
