@@ -86,3 +86,26 @@
 @media (min-width: 640px) {
   #pieces .tile.span-4 .tile__media, #pieces .tile.span-3 .tile__media { height: auto; aspect-ratio: 16 / 9; }
 }
+
+/* #pieces: every card is as tall as its own words, never stretched to the screen's foot (the kit's card rows run down
+   to it, which left the narrow tiles' short 16:9 posters over 250-300px of empty card). The credit line sits on the
+   card's foot, so every card in a row keeps the same padding under its last line. From 1280 the section stays the
+   kit's two screens (two tiles, then the rest in one row); under 1280 the rest go two by two, every poster shows whole
+   at 16:9, and the groups sit one card gap apart, so the six tiles read as one even grid. A phone keeps its two
+   screens with the same card gap between the groups, and the credit's underline sits under the name, not 44px down */
+#pieces .piece { display: flex; flex-direction: column; }
+#pieces .piece > .tile__media { flex: none; min-width: 0; min-height: 0; }
+#pieces .piece__meta { margin-top: auto; }
+@media (min-width: 1024px) {
+  main > #pieces.g2 > .wrap > .group > .grid:last-child { align-self: start; flex: none; }
+}
+@media (min-width: 640px) and (max-width: 1279px) {
+  #pieces .grid > .tile.span-3 { grid-column: auto / span 6; }
+  #pieces .piece .tile__media { height: auto; aspect-ratio: 16 / 9; }
+  main > #pieces.g2 > .wrap { grid-template-rows: auto auto; align-content: start; row-gap: var(--card-gap); }
+}
+@media (max-width: 639px) {
+  main > #pieces.g2:not(.g2m) > .wrap { row-gap: var(--card-gap); }
+  main > #pieces.g2:not(.g2m) > .wrap > :last-child { margin-block: 0; }
+  #pieces .piece__meta > span > a { display: inline; min-height: 0; padding-block: 11px; background-origin: content-box; }
+}
