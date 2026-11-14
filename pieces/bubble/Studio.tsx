@@ -38,7 +38,7 @@ function embed(o: SudsOptions) {
 export default function Studio() {
   const [o, setO] = useState<SudsOptions>(SUDS_DEFAULTS);
   const [linksText, setLinksText] = useState(colsToText(SUDS_DEFAULTS.columns));
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [howto, setHowto] = useState(false);
   const [note, setNote] = useState("");
   const [fallback, setFallback] = useState<string | null>(null);
@@ -54,8 +54,12 @@ export default function Studio() {
       }
     } catch { /* storage blocked: start from the defaults */ }
     loaded.current = true;
-    if (innerWidth < 760) setOpen(false);
   }, []);
+  useEffect(() => {
+    if (!open) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    addEventListener("keydown", esc); return () => removeEventListener("keydown", esc);
+  }, [open]);
   useEffect(() => { if (loaded.current) try { localStorage.setItem(KEY, JSON.stringify(o)); } catch { /* fine */ } }, [o]);
   useEffect(() => { if (!note) return; const id = setTimeout(() => setNote(""), 2600); return () => clearTimeout(id); }, [note]);
   useEffect(() => { document.documentElement.dataset.theme = o.theme; }, [o.theme]);
@@ -77,45 +81,63 @@ export default function Studio() {
   return (
     <div className="bb" onPointerMove={() => !moved && setMoved(true)}>
       <header className="bb-top">
-        <div className="bb-intro">
+        <div className="bb-corner">
           <span className="bb-brand"><Mark /> suds</span>
           <h1 className="bb-title">A glass bubble over your footer&apos;s wordmark</h1>
           <p className="bb-credit">after <a href={POST} target="_blank" rel="noreferrer">Alex Marin&apos;s footer</a> · free, MIT · <a href="/">All pieces</a></p>
-          <p className={`bb-hint${moved ? " bb-gone" : ""}`} aria-hidden={moved || undefined}>move your cursor over the big word below ↓</p>
         </div>
+
+        <p className={`bb-hint${moved || open ? " bb-gone" : ""}`} aria-hidden="true">
+          <span className="bb-fine">move your cursor across the word</span>
+          <span className="bb-touch">drag your finger across the word</span>
+        </p>
 
         <div className="bb-panel">
           <div className="bb-dock">
-            <button className="bb-chip" aria-expanded={open} aria-controls="bb-tune" onClick={() => setOpen((v) => !v)}>{open ? "Hide controls" : "Make it yours"}</button>
+            <button className="bb-chip" aria-expanded={open} aria-controls="bb-tune" onClick={() => setOpen((v) => !v)}>
+              {open ? "Close" : "Make it yours"}
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d={open ? "M3 7.5l3-3 3 3" : "M3 4.5l3 3 3-3"} /></svg>
+            </button>
             <button className="bb-chip bb-primary" onClick={copyComponent}>Copy component</button>
           </div>
           <p className="bb-note" role="status">{note}</p>
           {open && (
             <div className="bb-body" id="bb-tune">
               <section className="bb-sec">
-                <label className="bb-field"><span>Your word</span>
+                <h2><i>1</i>Your word</h2>
+                <label className="bb-field"><span className="bb-sr">Your word</span>
                   <input value={o.word} maxLength={24} onChange={(e) => set("word", e.target.value)} placeholder={SUDS_DEFAULTS.word} spellCheck={false} />
                 </label>
-                <Range label="Bubble size" value={o.size} min={0.5} max={1.6} step={0.05} show={(v) => `${v.toFixed(2)}×`} onChange={(v) => set("size", v)} reset={SUDS_DEFAULTS.size} />
-                <Range label="Refraction" value={o.refraction} min={0} max={1} step={0.05} onChange={(v) => set("refraction", v)} reset={SUDS_DEFAULTS.refraction} />
-                <Range label="Wobble" value={o.wobble} min={0} max={1} step={0.05} onChange={(v) => set("wobble", v)} reset={SUDS_DEFAULTS.wobble} />
-                <Range label="Rim hue" value={o.hue} min={0} max={1} step={0.01} hue onChange={(v) => set("hue", v)} reset={SUDS_DEFAULTS.hue} />
                 <div className="bb-seg" role="radiogroup" aria-label="Theme">
                   {(["dark", "light"] as const).map((t) => (
-                    <button key={t} role="radio" aria-checked={o.theme === t} className={o.theme === t ? "bb-on" : ""} onClick={() => set("theme", t)}>{t}</button>
+                    <button key={t} role="radio" aria-checked={o.theme === t} className={o.theme === t ? "bb-on" : ""} onClick={() => set("theme", t)}>
+                      <i className={`bb-sw bb-sw-${t}`} />{t === "dark" ? "Dark" : "Light"}
+                    </button>
                   ))}
                 </div>
               </section>
               <section className="bb-sec">
-                <label className="bb-field"><span>Link columns <em>one per line: Title: Link, Link = /url</em></span>
+                <h2><i>2</i>The bubble</h2>
+                <Range label="Size" value={o.size} min={0.5} max={1.6} step={0.05} show={(v) => `${v.toFixed(2)}×`} onChange={(v) => set("size", v)} reset={SUDS_DEFAULTS.size} />
+                <Range label="Refraction" value={o.refraction} min={0} max={1} step={0.05} onChange={(v) => set("refraction", v)} reset={SUDS_DEFAULTS.refraction} />
+                <Range label="Wobble" value={o.wobble} min={0} max={1} step={0.05} onChange={(v) => set("wobble", v)} reset={SUDS_DEFAULTS.wobble} />
+                <Range label="Rim hue" value={o.hue} min={0} max={1} step={0.01} hue onChange={(v) => set("hue", v)} reset={SUDS_DEFAULTS.hue} />
+              </section>
+              <section className="bb-sec">
+                <h2><i>3</i>Links</h2>
+                <label className="bb-field"><span>One column per line: <code>Title: Link, Link = /url</code></span>
                   <textarea rows={4} value={linksText} spellCheck={false} onChange={(e) => { setLinksText(e.target.value); set("columns", textToCols(e.target.value)); }} />
                 </label>
               </section>
               <section className="bb-sec">
+                <h2><i>4</i>Take it home</h2>
+                <p className="bb-sub">Copy component gives you Suds.tsx for React with these settings. For any other site, copy the embed.</p>
                 <div className="bb-actions">
                   <button onClick={() => put(embed(o), "Copied the embed snippet")}>Copy embed (any site)</button>
                 </div>
-                <button className="bb-link" onClick={() => setHowto((h) => !h)} aria-expanded={howto}>How to use it on your site {howto ? "↑" : "↓"}</button>
+                <button className="bb-link" onClick={() => setHowto((h) => !h)} aria-expanded={howto}>
+                  How to use it on your site <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" /></svg>
+                </button>
                 {howto && (
                   <div className="bb-howto">
                     <ol>
