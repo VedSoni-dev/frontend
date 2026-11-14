@@ -26,7 +26,6 @@ export default function Studio() {
   const [o, setO] = useState<GlassSettings>(DEFAULTS);
   const [linksText, setLinksText] = useState(linksToText(DEFAULTS.links));
   const [open, setOpen] = useState(false);
-  const [howto, setHowto] = useState(false);
   const [note, setNote] = useState("");
   const [fallback, setFallback] = useState<string | null>(null);
   const [replay, setReplay] = useState(0);
@@ -74,94 +73,89 @@ export default function Studio() {
 
   return (
     <div className="gl">
-      <header className="gl-top">
-        <div className="gl-corner">
-          <span className="gl-brand"><Mark /> vellum</span>
-          <h1 className="gl-title">A frosted-glass footer with your word cut into it</h1>
-          <p className="gl-credit">after <a href={POST} target="_blank" rel="noreferrer">Sonia Tkachuk&apos;s footer (Axion)</a> · free, MIT · <a href="/">All pieces</a></p>
-        </div>
-
-        <div className="gl-panel">
-          <div className="gl-dock">
-            <button className="gl-chip" aria-expanded={open} aria-controls="gl-tune" onClick={() => setOpen((v) => !v)}>
-              {open ? "Close" : "Make it yours"}
-              <svg viewBox="0 0 12 12" aria-hidden="true"><path d={open ? "M3 7.5l3-3 3 3" : "M3 4.5l3 3 3-3"} /></svg>
-            </button>
-            <button className="gl-chip" onClick={() => setReplay((n) => n + 1)}>Replay</button>
+      <div className="gl-hero">
+        <header className="gl-top">
+          <div className="gl-corner">
+            <span className="gl-brand"><Mark /> vellum</span>
+            <h1 className="gl-title">A frosted-glass footer with your word cut into it</h1>
+            <p className="gl-credit">after <a href={POST} target="_blank" rel="noreferrer">Sonia Tkachuk&apos;s footer (Axion)</a> · free, MIT · <a href="/">All pieces</a></p>
           </div>
-          <p className="gl-note" role="status">{note}</p>
-          {open && (
-            <div className="gl-body" id="gl-tune">
-              <section className="gl-sec">
-                <h2><i>1</i>Your word</h2>
-                <label className="gl-field"><span className="gl-sr">Your word</span>
-                  <input className="gl-big" value={o.word} maxLength={14} onChange={(e) => set("word", e.target.value)} placeholder={DEFAULTS.word} spellCheck={false} />
-                </label>
-                <p className="gl-sub">Short words look best: 4 to 8 letters.</p>
-              </section>
-              <section className="gl-sec">
-                <h2><i>2</i>Your photo</h2>
-                <div className="gl-photos" role="radiogroup" aria-label="Photo">
-                  {PHOTOS.map((p) => (
-                    <button key={p.id} role="radio" aria-checked={o.photo === photoUrl(p.id)} className={o.photo === photoUrl(p.id) ? "gl-on" : ""} onClick={() => set("photo", photoUrl(p.id))}>
-                      <img src={`/glass/${p.id}-thumb.jpg`} alt="" /><span>{p.label}</span>
-                    </button>
-                  ))}
-                  <button className={o.photo.startsWith("blob:") ? "gl-on gl-up" : "gl-up"} onClick={() => file.current?.click()}>
-                    <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9V3M3.5 5.5 6 3l2.5 2.5" /></svg><span>Yours</span>
-                  </button>
-                  <input ref={file} type="file" accept="image/*" hidden onChange={(e) => pickFile(e.target.files?.[0])} />
-                </div>
-                <p className="gl-sub">Busy, colourful photos with sharp detail show the clear letters best. Nothing is uploaded.</p>
-              </section>
-              <section className="gl-sec">
-                <h2><i>3</i>The glass</h2>
-                <Range label="Frost" v={o.blur} a={4} b={40} unit="px" on={(v) => set("blur", v)} style={pct(o.blur, 4, 40)} />
-                <Range label="Photo softness" v={o.soft} a={0} b={20} unit="px" on={(v) => set("soft", v)} style={pct(o.soft, 0, 20)} />
-                <Range label="Panel height" v={Math.round(o.panel * 100)} a={30} b={70} unit="%" on={(v) => set("panel", v / 100)} style={pct(o.panel * 100, 30, 70)} />
-                <label className="gl-color">Mark colour <input type="color" value={o.accent} onChange={(e) => set("accent", e.target.value)} /><code>{o.accent}</code></label>
-              </section>
-              <section className="gl-sec">
-                <h2><i>4</i>Words and links</h2>
-                <label className="gl-field">Headline<input value={o.headline} maxLength={70} onChange={(e) => set("headline", e.target.value)} /></label>
-                <label className="gl-field">Line under it<input value={o.sub} maxLength={110} onChange={(e) => set("sub", e.target.value)} /></label>
-                <label className="gl-field">Button<input value={o.cta} maxLength={24} onChange={(e) => set("cta", e.target.value)} /></label>
-                <label className="gl-field">Links, one per line: <code>Label</code> or <code>Label = /path</code>
-                  <textarea rows={6} value={linksText} onChange={(e) => { setLinksText(e.target.value); set("links", textToLinks(e.target.value)); }} spellCheck={false} />
-                </label>
-                <button className="gl-reset" onClick={() => { setO(DEFAULTS); setLinksText(linksToText(DEFAULTS.links)); }}>Start over</button>
-              </section>
+
+          <div className="gl-panel">
+            <div className="gl-dock">
+              <button className="gl-chip" aria-expanded={open} aria-controls="gl-tune" onClick={() => setOpen((v) => !v)}>
+                {open ? "Close" : "Make it yours"}
+                <svg viewBox="0 0 12 12" aria-hidden="true"><path d={open ? "M3 7.5l3-3 3 3" : "M3 4.5l3 3 3-3"} /></svg>
+              </button>
+              <button className="gl-chip" onClick={() => setReplay((n) => n + 1)}>
+                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6a3.5 3.5 0 1 0 1.1-2.55M2.5 1.8v2h2" /></svg>Replay
+              </button>
+              <button className="gl-chip" onClick={copyHtml}>Copy HTML + CSS</button>
+              <button className="gl-chip gl-primary" onClick={copyReact}>Copy Glass.tsx</button>
             </div>
-          )}
-        </div>
-      </header>
-
-      <section className="gl-copy" aria-label="Copy it">
-        <div className="gl-copyrow">
-          <button className="gl-chip gl-primary" onClick={copyReact}>Copy React (Glass.tsx)</button>
-          <button className="gl-chip" onClick={copyHtml}>Copy HTML + CSS</button>
-          <button className="gl-link" aria-expanded={howto} onClick={() => setHowto((v) => !v)}>
-            How to use it and how it works <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" /></svg>
-          </button>
-        </div>
-        {howto && (
-          <div className="gl-howto">
-            <ol>
-              <li><b>Pick your word and photo</b> under &ldquo;Make it yours&rdquo;. Everything you change shows below, live.</li>
-              <li><b>React:</b> &ldquo;Copy React&rdquo;, save it as <code>Glass.tsx</code> in your app, then put <code>&lt;Glass word=&quot;…&quot; photo=&quot;/your-photo.jpg&quot; /&gt;</code> at the bottom of your page. The copied file starts with your exact settings.</li>
-              <li><b>Any site:</b> &ldquo;Copy HTML + CSS&rdquo; and paste it before <code>&lt;/body&gt;</code>. One style block, the footer, one short script.</li>
-              <li><b>Your own photo:</b> it never leaves this computer. Put the file in your site&apos;s public folder and point <code>photo</code> (or <code>--photo</code>) at it.</li>
-              <li><b>How it works:</b> the card shows your photo, softly blurred. The panel is a <code>backdrop-filter</code> frost over it. Each letter&apos;s background is the same photo, sharp and a touch brighter, lined up with the card and cut to the letter with <code>background-clip: text</code>, so you see straight through the frost. The entrance only moves <code>transform</code> and <code>opacity</code>; with reduced motion it just shows.</li>
-            </ol>
+            <p className="gl-note" role="status">{note}</p>
+            {open && (
+              <div className="gl-body" id="gl-tune">
+                <section className="gl-sec">
+                  <h2><i>1</i>Your word</h2>
+                  <label className="gl-field"><span className="gl-sr">Your word</span>
+                    <input className="gl-big" value={o.word} maxLength={14} onChange={(e) => set("word", e.target.value)} placeholder={DEFAULTS.word} spellCheck={false} />
+                  </label>
+                  <p className="gl-sub">Short words look best: 4 to 8 letters.</p>
+                </section>
+                <section className="gl-sec">
+                  <h2><i>2</i>Your photo</h2>
+                  <div className="gl-photos" role="radiogroup" aria-label="Photo">
+                    {PHOTOS.map((p) => (
+                      <button key={p.id} role="radio" aria-checked={o.photo === photoUrl(p.id)} className={o.photo === photoUrl(p.id) ? "gl-on" : ""} onClick={() => set("photo", photoUrl(p.id))}>
+                        <img src={`/glass/${p.id}-thumb.jpg`} alt="" /><span>{p.label}</span>
+                      </button>
+                    ))}
+                    <button className={o.photo.startsWith("blob:") ? "gl-on gl-up" : "gl-up"} onClick={() => file.current?.click()}>
+                      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9V3M3.5 5.5 6 3l2.5 2.5" /></svg><span>Yours</span>
+                    </button>
+                    <input ref={file} type="file" accept="image/*" hidden onChange={(e) => pickFile(e.target.files?.[0])} />
+                  </div>
+                  <p className="gl-sub">Busy, colourful photos with sharp detail show the clear letters best. Nothing is uploaded.</p>
+                </section>
+                <section className="gl-sec">
+                  <h2><i>3</i>The glass</h2>
+                  <Range label="Frost" v={o.blur} a={4} b={40} unit="px" on={(v) => set("blur", v)} style={pct(o.blur, 4, 40)} />
+                  <Range label="Photo softness" v={o.soft} a={0} b={20} unit="px" on={(v) => set("soft", v)} style={pct(o.soft, 0, 20)} />
+                  <Range label="Panel height" v={Math.round(o.panel * 100)} a={30} b={70} unit="%" on={(v) => set("panel", v / 100)} style={pct(o.panel * 100, 30, 70)} />
+                  <label className="gl-color">Mark colour <input type="color" value={o.accent} onChange={(e) => set("accent", e.target.value)} /><code>{o.accent}</code></label>
+                </section>
+                <section className="gl-sec">
+                  <h2><i>4</i>Words and links</h2>
+                  <label className="gl-field">Headline<input value={o.headline} maxLength={70} onChange={(e) => set("headline", e.target.value)} /></label>
+                  <label className="gl-field">Line under it<input value={o.sub} maxLength={110} onChange={(e) => set("sub", e.target.value)} /></label>
+                  <label className="gl-field">Button<input value={o.cta} maxLength={24} onChange={(e) => set("cta", e.target.value)} /></label>
+                  <label className="gl-field"><span>Links, one per line: <code>Label</code> or <code>Label = /path</code></span>
+                    <textarea rows={6} value={linksText} onChange={(e) => { setLinksText(e.target.value); set("links", textToLinks(e.target.value)); }} spellCheck={false} />
+                  </label>
+                  <button className="gl-reset" onClick={() => { setO(DEFAULTS); setLinksText(linksToText(DEFAULTS.links)); }}>Start over</button>
+                </section>
+              </div>
+            )}
           </div>
-        )}
-      </section>
+        </header>
 
-      <div className="gl-cue" aria-hidden="true"><span>scroll</span><i /></div>
-
-      <div className="gl-stage">
-        <Glass {...o} replay={replay} />
+        <div className="gl-stage">
+          <Glass {...o} replay={replay} />
+        </div>
       </div>
+
+      <section className="gl-howto" aria-labelledby="gl-howto-h">
+        <h2 id="gl-howto-h">Put it on your site</h2>
+        <ol>
+          <li><b>Pick your word and photo</b> under &ldquo;Make it yours&rdquo;. The footer above changes as you type.</li>
+          <li><b>React:</b> &ldquo;Copy Glass.tsx&rdquo;, save it in your app, then put <code>&lt;Glass word=&quot;…&quot; photo=&quot;/your-photo.jpg&quot; /&gt;</code> at the bottom of your page. The file starts with your exact settings.</li>
+          <li><b>Any site:</b> &ldquo;Copy HTML + CSS&rdquo; and paste it before <code>&lt;/body&gt;</code>. One style block, the footer, one short script.</li>
+          <li><b>Your own photo</b> never leaves this computer. Put the file in your site&apos;s public folder and point <code>photo</code> (or <code>--photo</code>) at it.</li>
+        </ol>
+        <h2>How it works</h2>
+        <p>The card shows your photo, softly blurred. The panel is a <code>backdrop-filter</code> frost over it. Each letter&apos;s background is the same photo, sharp and a touch brighter, lined up with the card and cut to the letter with <code>background-clip: text</code>, so you see straight through the frost. On your site the entrance plays when the footer scrolls into view; it only moves <code>transform</code> and <code>opacity</code>, and with reduced motion it just shows.</p>
+      </section>
 
       {fallback && (
         <div className="gl-card" role="dialog" aria-label="Copy this">

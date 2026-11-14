@@ -82,8 +82,8 @@ export const GLASS_CSS = `
 @supports not ((background-clip:text) or (-webkit-background-clip:text)){.vl-l{color:rgb(255 255 255/.9);background:none}}
 @media (max-width:640px){
   .vl{aspect-ratio:auto;min-height:88svh;border-radius:18px}
-  .vl-panel{left:10px;right:10px;bottom:10px;height:min(calc(var(--panel-h) - 10px),330px)}
-  .vl-cta{bottom:min(var(--panel-h),340px)}
+  .vl-panel{left:10px;right:10px;bottom:10px;height:min(calc(var(--panel-h) - 10px),264px)}
+  .vl-cta{bottom:min(var(--panel-h),274px)}
   .vl-nav{justify-content:flex-start;gap:8px 18px}
   .vl-meta{gap:12px}
 }
