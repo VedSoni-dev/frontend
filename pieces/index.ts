@@ -102,6 +102,19 @@ export const PIECES: Piece[] = [
     media: media("dither"),
     theme: { light: "#0b0a0a", dark: "#0b0a0a" },
   },
+  {
+    path: "effects",
+    name: "tincture",
+    what: "Liquid and torn-print image effects",
+    title: "Melts your photo into a printed card",
+    line: "Drop in your photo and it melts into a card, poster, chip row or ticket: liquid, marble, torn print, glow, grain. Download a PNG or copy the component.",
+    credit: { name: "Yax_buzz", handle: "Yaxbuzz", url: "https://x.com/Yaxbuzz/status/2121270887714611691", work: "a set of UI element designs" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/effects",
+    usesAi: false,
+    embed: { label: "Tincture.tsx", href: "/effects/Tincture.tsx" },
+    media: media("effects"),
+    theme: { light: "#f3f1ed", dark: "#131215" },
+  },
 ];
 
 export function piece(path: string): Piece {
