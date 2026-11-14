@@ -3,13 +3,15 @@
 //   pieces/slider/detent.js       -> public/slider/detent.js     (the same engine as a plain script: window.Detent + [data-detent])
 //   pieces/footer/GrainFooter.tsx -> public/footer/GrainFooter.tsx (the one-file React component)
 //   pieces/effects/Tincture.tsx   -> public/effects/Tincture.tsx   (tincture's one-file React component, shader inside)
+//   pieces/sharks/Shoal.tsx       -> public/sharks/Shoal.tsx       (shoal's one-file React + WebGL2 component)
 // Run by `npm run dev` and `npm run build`; the outputs are committed too, so the URLs work from any checkout.
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-for (const d of ["public/flowers", "public/slider", "public/footer", "public/effects"]) mkdirSync(d, { recursive: true });
+for (const d of ["public/flowers", "public/slider", "public/footer", "public/effects", "public/sharks"]) mkdirSync(d, { recursive: true });
 copyFileSync("pieces/flowers/seedbed.js", "public/flowers/seedbed.js");
 copyFileSync("pieces/footer/GrainFooter.tsx", "public/footer/GrainFooter.tsx");
 copyFileSync("pieces/effects/Tincture.tsx", "public/effects/Tincture.tsx");
+copyFileSync("pieces/sharks/Shoal.tsx", "public/sharks/Shoal.tsx");
 
 // detent: the ES module becomes one plain script tag (from detent's own scripts/copy-source.mjs).
 const src = readFileSync("pieces/slider/detent.js", "utf8").replace(/^export (const|function|let) /gm, "$1 ");
@@ -33,4 +35,4 @@ if (typeof document !== "undefined") {
 if (typeof module === "object" && module && module.exports) module.exports = api;
 })();
 `);
-console.log("copy-sources: public/flowers/seedbed.js, public/slider/detent.js, public/footer/GrainFooter.tsx, public/effects/Tincture.tsx");
+console.log("copy-sources: public/flowers/seedbed.js, public/slider/detent.js, public/footer/GrainFooter.tsx, public/effects/Tincture.tsx, public/sharks/Shoal.tsx");

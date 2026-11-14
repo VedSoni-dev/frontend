@@ -115,6 +115,19 @@ export const PIECES: Piece[] = [
     media: media("effects"),
     theme: { light: "#f3f1ed", dark: "#131215" },
   },
+  {
+    path: "sharks",
+    name: "shoal",
+    what: "3D pixel shark shoal",
+    title: "Spins a shoal of pixel sharks in 3D",
+    line: "Pixel-art sharks that turn out to be 3D: drag to spin them, tune the pixel size and palette, take it as a background component or a PNG.",
+    credit: { name: "stacked", handle: "stackedlol", url: "https://x.com/stackedlol/status/2121327009725047087", work: "the “3D gaussian pixel sharks” post" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/sharks",
+    usesAi: false,
+    embed: { label: "Shoal.tsx", href: "/sharks/Shoal.tsx" },
+    media: media("sharks"),
+    theme: { light: "#05080c", dark: "#05080c" },
+  },
 ];
 
 export function piece(path: string): Piece {
