@@ -87,9 +87,8 @@ export default function Playground() {
       ) : (
         <header className="lm-top">
           <div className="lm-corner">
-            <span className="lm-brand"><Mark /> loam</span>
             <h1 className="lm-title">A living flower planter for your site or your desk</h1>
-            <p className="lm-credit">after <a href={POST} target="_blank" rel="noreferrer">Rishi&apos;s living flower meadow</a> · free, MIT · <a href="/">All pieces</a></p>
+            <p className="lm-credit"><span className="lm-brand"><Mark /> loam</span><span className="lm-dot">·</span><span>after <a href={POST} target="_blank" rel="noreferrer">Rishi&apos;s <span className="lm-long">living flower </span>meadow</a></span><span className="lm-dot">·</span><span className="lm-free">free, MIT</span><span className="lm-dot lm-free">·</span><a href="/">All pieces</a></p>
           </div>
 
           <div className="lm-panel">
