@@ -39,6 +39,10 @@ const SETS: Record<string, { a: string; b: string; alt: string; aStyle: React.CS
     a: "/site/effects-a.jpg", b: "/site/effects-b.jpg", alt: "tincture: a sample photo marbled into a ticket card, and the same photo glowing in a row of seven round chips",
     aStyle: { left: "4%", top: "4%", width: "66%", height: "50%" }, bStyle: { left: "30%", top: "54%", width: "66%", height: "42%" }, tag: { left: "72%", top: "10%", width: "24%" },
   },
+  sharks: {
+    a: "/site/sharks-a.jpg", b: "/site/sharks-b.jpg", alt: "shoal: a ring of pixel sharks swimming in 3D on night water, and the same shoal on paper with its Tune panel open",
+    aStyle: { left: "4%", top: "4%", width: "68%", height: "50%" }, bStyle: { left: "28%", top: "54%", width: "68%", height: "42%" }, tag: { left: "4%", top: "60%", width: "22%" },
+  },
 };
 
 function CollageSet({ p, on }: { p: Piece; on: boolean }) {
@@ -78,8 +82,12 @@ function PieceTile({ p, span = 6 }: { p: Piece; span?: number }) {
 export default function Index() {
   // the section is the kit's two screens: the h2 and two tiles on the first, the rest side by side on the second
   // (three a row at span-4, four at span-3), so an odd count never leaves a lone tile over empty ground
-  const first = PIECES.slice(0, 2), rest = PIECES.slice(2);
-  const restSpan = rest.length >= 4 ? 3 : rest.length === 3 ? 4 : 6;
+  // the first screen takes two tiles (or three, when two would leave the rest unable to fill whole rows of four or three)
+  const fills = (n: number) => n % 4 === 0 || n % 3 === 0 || n <= 2;
+  const lead = fills(PIECES.length - 2) ? 2 : 3;
+  const first = PIECES.slice(0, lead), rest = PIECES.slice(lead);
+  const firstSpan = lead === 2 ? 6 : 4;
+  const restSpan = rest.length % 4 === 0 ? 3 : rest.length % 3 === 0 ? 4 : 6;
   const embeds = PIECES.filter((p) => p.embed);
   return (
     <>
@@ -141,7 +149,7 @@ export default function Index() {
               <div className="section-head">
                 <h2 id="pieces-h">The pieces. <span className="muted">Each runs at its own address and copies into your site.</span></h2>
               </div>
-              <div className="grid">{first.map((p) => <PieceTile key={p.path} p={p} />)}</div>
+              <div className="grid">{first.map((p) => <PieceTile key={p.path} p={p} span={firstSpan} />)}</div>
             </div>
             <div className="group">
               <div className="grid">{rest.map((p) => <PieceTile key={p.path} p={p} span={restSpan} />)}</div>

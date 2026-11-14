@@ -310,7 +310,8 @@ export function createShoal(canvas: HTMLCanvasElement, init: ShoalOptions = {}):
     const fw = Math.max(1, Math.ceil(canvas.width / block)), fh = Math.max(1, Math.ceil(canvas.height / block));
     sizeTarget(fw, fh);
     const eye = [Math.sin(cam.polar) * Math.cos(cam.az) * cam.radius, Math.cos(cam.polar) * cam.radius, Math.sin(cam.polar) * Math.sin(cam.az) * cam.radius];
-    const fov = 45 * DEG;
+    // 45° tall on a landscape screen; on a narrow (portrait) one the view opens up so the whole ring still fits across
+    const fov = 2 * Math.atan(Math.min(Math.tan(22.5 * DEG) * Math.max(1, 1.2 / (cssW / cssH)), Math.tan(36 * DEG)));
     lastVP = mul(perspective(fov, cssW / cssH, 0.1, 100), lookAt(eye, [0, -0.2, 0]));
     g.bindFramebuffer(g.FRAMEBUFFER, G.fbo); g.viewport(0, 0, fw, fh);
     g.clearColor(0, 0, 0, 0); g.clearDepth(1); g.enable(g.DEPTH_TEST); g.clear(g.COLOR_BUFFER_BIT | g.DEPTH_BUFFER_BIT);
