@@ -141,6 +141,19 @@ export const PIECES: Piece[] = [
     media: media("bubble"),
     theme: { light: "#0a0b0d", dark: "#0a0b0d" },
   },
+  {
+    path: "sky",
+    name: "cirrus",
+    what: "Live ASCII sky header",
+    title: "Draws a sky in tiny characters",
+    line: "A live sky made of tiny characters for the top of your homepage: move through it and the wind writes //// behind you. Pick dawn to night, copy one file.",
+    credit: { name: "unvalley", handle: "unvalley_", url: "https://x.com/unvalley_/status/2121293930641997992", work: "the “blue sky study” post" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/sky",
+    usesAi: false,
+    embed: { label: "cirrus.js", href: "/sky/cirrus.js" },
+    media: media("sky"),
+    theme: { light: "#4ea4dc", dark: "#0d1222" },
+  },
 ];
 
 export function piece(path: string): Piece {
