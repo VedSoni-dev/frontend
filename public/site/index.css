@@ -123,3 +123,11 @@
   main > #pieces.g2:not(.g2m) > .wrap > :last-child { margin-block: 0; }
   #pieces .piece__meta > span > a { display: inline; min-height: 0; padding-block: 11px; background-origin: content-box; }
 }
+
+/* the close's name never runs over the links: from 640 the close row is at least the word's height (the
+   links column grows with every piece), and the footer grows past one screen rather than overlap */
+@media (min-width: 640px) {
+  footer.closing:has(> .wrap > .close--word) { height: auto; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+  footer.closing:has(> .wrap > .close--word) > .wrap { flex: 1 0 auto; height: auto; grid-template-rows: minmax(min-content, 1fr) auto; }
+  footer.closing > .wrap > .closing__cta.close--word { min-height: min-content; }
+}
