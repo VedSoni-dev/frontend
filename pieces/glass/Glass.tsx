@@ -73,7 +73,8 @@ export const GLASS_CSS = `
   font-weight:800;line-height:.76;letter-spacing:-.075em;font-size:var(--fs,160px);transform:translateY(.1em)}
 .vl-l{display:block;color:transparent;background-image:var(--photo);background-repeat:no-repeat;
   background-size:var(--bw,0) var(--bh,0);background-position:var(--bx,0) var(--by,0);
-  -webkit-background-clip:text;background-clip:text;filter:brightness(1.12) saturate(1.12);padding-bottom:.08em}
+  -webkit-background-clip:text;background-clip:text;filter:brightness(1.12) saturate(1.12);
+  padding:.14em .14em .08em;margin:-.14em -.14em 0} /* room for the ink past the tight letter box; the engine reads offsetLeft/Top, so the photo still lines up */
 .vl-mark{position:absolute;display:flex;flex-direction:column;gap:7px;align-items:flex-end;right:clamp(18px,2.4vw,30px);top:var(--mt,55%)}
 .vl-mark b{display:block;height:clamp(10px,1.6vw,22px);border-radius:99px;background:var(--accent)}
 .vl-mark b:first-child{width:clamp(22px,3vw,40px);border-radius:50%;height:clamp(22px,3vw,40px)}
