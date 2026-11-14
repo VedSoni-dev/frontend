@@ -43,6 +43,13 @@
 .credits__rows .rows__name small a { color: var(--ink); text-underline-offset: 3px; }
 .credits__actions { align-self: end; }
 @media (min-width: 1024px) { .credits__rows { grid-row: 1 / span 2; } .credits__actions { grid-column: 1 / span 6; } }
+/* seven pieces and counting: from 1024 the rows sit closer (8px over and under each), so the list, and the buttons
+   on its last line, end inside the screen's padding instead of running down to the footer */
+@media (min-width: 1024px) {
+  .credits__rows > li { padding-block: var(--s-2); }
+  .credits__rows > li:first-child { padding-top: 0; }
+  .credits__rows .rows__name small { margin-top: 2px; }
+}
 
 /* the close's name, hand-set to run from line to line (system.css sizes it for a short name) */
 .close--word { container-type: inline-size; }
@@ -98,6 +105,13 @@
 #pieces .piece__meta { margin-top: auto; }
 @media (min-width: 1024px) {
   main > #pieces.g2 > .wrap > .group > .grid:last-child { align-self: start; flex: none; }
+}
+/* from 1280 the second screen's one row of cards (4:3 posters, which keep each burned-in headline whole) sits a little
+   under the middle of its screen, not at its top, so the space under it before "Free with one publik sign-in" stays
+   near the page's other gaps between sections instead of a 550px empty band */
+@media (min-width: 1280px) {
+  main > #pieces.g2 > .wrap > .group:last-child { justify-content: center; padding-top: var(--s-8); }
+  #pieces .group:last-child .tile.span-3 .tile__media { aspect-ratio: 4 / 3; }
 }
 @media (min-width: 640px) and (max-width: 1279px) {
   #pieces .grid > .tile.span-3 { grid-column: auto / span 6; }
