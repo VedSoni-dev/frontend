@@ -9,7 +9,7 @@ import { PIECES, SITE } from "@/pieces";
 
 const TITLE = "fork this frontend: free front-end pieces for websites";
 const DESCRIPTION =
-  "A hover-flower garden, a haptic slider, a grain-photo footer, a gait dashboard and a dithered-wallpaper maker, rebuilt in code from designs posted on X. Free with a publik account, MIT licensed.";
+  "A hover-flower garden, a haptic slider, a grain-photo footer, a gait dashboard, a dithered-wallpaper maker and a photo-melting card maker, rebuilt in code from designs posted on X. Free with a publik account, MIT licensed.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),

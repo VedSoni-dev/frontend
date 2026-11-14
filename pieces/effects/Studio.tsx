@@ -435,11 +435,11 @@ export default function Studio() {
       <header className="tn-top">
         <span className="tn-brand"><Spark className="tn-brand-mark" />tincture</span>
         <h1 className="tn-title">Your photo, melted into ready-made layouts</h1>
-        <p className="tn-credit">After <a href={POST} target="_blank" rel="noreferrer">Yax_buzz&rsquo;s UI element designs</a> · free, MIT</p>
+        <p className="tn-credit">After <a href={POST} target="_blank" rel="noreferrer">Yax_buzz&rsquo;s UI element designs</a> · free, MIT · <a href="/">All pieces</a></p>
       </header>
 
       <main className="tn-main">
-        <section className="tn-stage-wrap" aria-label="Preview">
+        <section className={`tn-stage-wrap tn-w-${look.layout}`} aria-label="Preview">
           <div className="tn-layouts" role="tablist" aria-label="Layout">
             {LAYOUTS.map((l) => (
               <button key={l.id} role="tab" aria-selected={look.layout === l.id} className={look.layout === l.id ? "on" : ""} onClick={() => setLook((x) => ({ ...x, layout: l.id }))}>{l.label}</button>
@@ -454,49 +454,55 @@ export default function Studio() {
           </SlotCtx.Provider>
           {error && <div className="tn-error" role="alert"><span>{error}</span><button onClick={() => setError(null)}>Dismiss</button><button onClick={pick}>Choose another</button></div>}
           {noGL && <p className="tn-note">WebGL is off in this browser, so you see the plain photo. The effects need WebGL (any recent browser has it).</p>}
-          <p className="tn-hint">Click any text in the layout to change it.</p>
+          <p className="tn-hint"><span>Click any words in the layout to rewrite them.</span><span className="tn-hint-look">{PRESETS[look.preset].label} · {LAYOUTS.find((l) => l.id === look.layout)?.label}</span></p>
         </section>
 
         <aside className="tn-panel" aria-label="Controls">
-          <div className="tn-group">
+          <section className="tn-sec">
+            <h2><i>1</i>Your photo</h2>
             <button className="tn-primary" onClick={pick} disabled={busy === "load"}>{photo && !photo.sample ? "Choose another photo" : "Choose your photo"}</button>
             <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e: ChangeEvent<HTMLInputElement>) => { openFile(e.target.files?.[0]); e.target.value = ""; }} />
-            <p className="tn-small">{photo ? (photo.sample ? "Showing our sample. " : `Using ${photo.name}. `) : "Or drop or paste one anywhere. "}Your photo stays on this device: nothing is uploaded.</p>
+            <p className="tn-small">{photo ? (photo.sample ? "Showing our sample. " : `Using ${photo.name}. `) : "Or drop or paste one anywhere. "}It stays on this device: nothing is uploaded.</p>
             <div className="tn-row">
               {!photo && <button className="tn-ghost" onClick={sample}>Try a sample</button>}
               {photo && <button className="tn-ghost" onClick={clear}>Remove photo</button>}
               <button className="tn-ghost" onClick={() => setMotion((m) => !m)} aria-pressed={!motion}>{motion ? "Pause motion" : "Play motion"}</button>
             </div>
-          </div>
+          </section>
 
-          <div className="tn-group">
-            <h2>Treatment</h2>
-            <div className="tn-chips-pick">
+          <section className="tn-sec">
+            <h2><i>2</i>Treatment</h2>
+            <div className="tn-presets">
               {PRESET_IDS.map((p: PresetId) => (
                 <button key={p} className={look.preset === p ? "on" : ""} aria-pressed={look.preset === p} onClick={() => setLook((l) => ({ ...l, preset: p, dials: null }))}>{PRESETS[p].label}</button>
               ))}
             </div>
-            {DIALS.map((d) => (
-              <label key={d.id} className="tn-dial">
-                <span>{d.label}<b>{Math.round(T[d.id] * 100)}</b></span>
-                <input type="range" min={0} max={1} step={0.01} value={T[d.id]} aria-label={d.label} onChange={(e) => setDial(d.id, Number(e.target.value))} />
-              </label>
-            ))}
-            <div className="tn-row">
-              <button className="tn-ghost" onClick={() => setLook((l) => ({ ...l, dials: null }))}>Reset dials</button>
-              <button className="tn-ghost" onClick={shuffle}>Shuffle</button>
+            <div className="tn-dials">
+              {DIALS.map((d) => (
+                <label key={d.id} className="tn-dial">
+                  <span>{d.label}</span>
+                  <input type="range" min={0} max={1} step={0.01} value={T[d.id]} aria-label={d.label} style={{ ["--v" as string]: `${T[d.id] * 100}%` }} onChange={(e) => setDial(d.id, Number(e.target.value))} />
+                  <b>{Math.round(T[d.id] * 100)}</b>
+                </label>
+              ))}
             </div>
-          </div>
+            <div className="tn-row tn-row-quiet">
+              <button className="tn-text" onClick={() => setLook((l) => ({ ...l, dials: null }))} disabled={!look.dials}>Reset dials</button>
+              <button className="tn-text" onClick={shuffle}>Shuffle</button>
+            </div>
+          </section>
 
-          <div className="tn-group">
-            <h2>Take it away</h2>
-            <button className="tn-primary" onClick={exportPng} disabled={busy === "png"}>{busy === "png" ? "Making PNG…" : "Download PNG"}</button>
-            <button className="tn-ghost tn-wide" onClick={copyCode}>Copy as React component</button>
-            <p className="tn-small">The component is one file, <a href="/effects/Tincture.tsx" target="_blank" rel="noreferrer">Tincture.tsx</a>, with the shader inside. The link to this look is in your address bar.</p>
-          </div>
+          <section className="tn-sec">
+            <h2><i>3</i>Take it away</h2>
+            <div className="tn-take">
+              <button className="tn-primary" onClick={exportPng} disabled={busy === "png"}>{busy === "png" ? "Making PNG…" : "Download PNG"}</button>
+              <button className="tn-ghost" onClick={copyCode}>Copy component</button>
+            </div>
+            <p className="tn-small">The component is one file, <a href="/effects/Tincture.tsx" target="_blank" rel="noreferrer">Tincture.tsx</a>, shader inside. The link to this look is in your address bar.</p>
+          </section>
 
-          <details className="tn-group tn-how">
-            <summary>How it works</summary>
+          <details className="tn-sec tn-how">
+            <summary>How it works<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></summary>
             <ol>
               <li>Pick a layout above the preview, then choose, drop or paste a photo.</li>
               <li>Pick a treatment and move the dials: Warp and Scale shape the melt, Edge tears the paper, Grain and Tint finish it.</li>

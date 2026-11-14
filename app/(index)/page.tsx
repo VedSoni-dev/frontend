@@ -35,6 +35,10 @@ const SETS: Record<string, { a: string; b: string; alt: string; aStyle: React.CS
     a: "/site/dither-a.jpg", b: "/site/dither-b.jpg", alt: "backdrop: a sample picture dithered in orange behind a placeholder app screen, and the same picture before and after",
     aStyle: { left: "4%", top: "4%", width: "64%", height: "48%" }, bStyle: { left: "32%", top: "54%", width: "64%", height: "42%" }, tag: { left: "70%", top: "8%", width: "26%" },
   },
+  effects: {
+    a: "/site/effects-a.jpg", b: "/site/effects-b.jpg", alt: "tincture: a sample photo marbled into a ticket card, and the same photo glowing in a row of seven round chips",
+    aStyle: { left: "4%", top: "4%", width: "66%", height: "50%" }, bStyle: { left: "30%", top: "54%", width: "66%", height: "42%" }, tag: { left: "72%", top: "10%", width: "24%" },
+  },
 };
 
 function CollageSet({ p, on }: { p: Piece; on: boolean }) {
