@@ -192,6 +192,17 @@ export const PIECES: Piece[] = [
     embed: { label: "baize.js", href: "/hold/baize.js" },
     media: media("hold"),
     theme: { light: "#e8e8e8", dark: "#141414" },
+  },  {
+    path: "backlit",
+    name: "backlit",
+    what: "Lyrics and screen glow",
+    title: "Lights up the room with the song",
+    line: "Pick a song and it plays: your screen's edges glow in the cover's colours and the lyrics land word by word, in ten styles.",
+    credit: { name: "ARK", handle: "arkdevperson", url: "https://www.instagram.com/reel/Df6SNoWOBIp/", work: "Verci + Lumn, the lyrics and glow setup in the reel" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/backlit",
+    usesAi: false,
+    media: media("backlit"),
+    theme: { light: "#050506", dark: "#050506" },
   },
 ];
 

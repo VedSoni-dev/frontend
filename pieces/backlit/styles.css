@@ -1,0 +1,18 @@
+/* /backlit: a dark room, and the only colour comes from the song. The app (app.css), its ten lyric styles
+   (lyrics.css), and the gate drawn in the same dark. */
+@import "./app.css";
+@import "./lyrics.css";
+:root {
+  color-scheme: dark;
+  --publik-bg: #050506;
+  --publik-card: #121115;
+  --publik-ink: #f3efe9;
+  --publik-muted: #9b96a0;
+  --publik-line: rgba(255, 255, 255, .1);
+  --publik-accent: #f3efe9;
+  --publik-accent-ink: #0b0a0c;
+  --publik-hover: #1b1a1f;
+  --publik-display-font: var(--f-tight), var(--font-sans), system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #050506; color: #f3efe9; font-family: var(--font-sans), system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
