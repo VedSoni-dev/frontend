@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 // Files people embed in their own sites (scripts/copy-sources.mjs): public, never gated, loadable from any origin
 // (a cross-origin <script type="module"> needs CORS).
-const EMBEDS = ["/flowers/seedbed.js", "/slider/detent.js", "/footer/GrainFooter.tsx", "/effects/Tincture.tsx", "/sharks/Shoal.tsx", "/bubble/suds.js", "/bubble/Suds.tsx"];
+const EMBEDS = ["/flowers/seedbed.js", "/slider/detent.js", "/footer/GrainFooter.tsx", "/effects/Tincture.tsx", "/sharks/Shoal.tsx", "/bubble/suds.js", "/bubble/Suds.tsx", "/hold/baize.js"];
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,

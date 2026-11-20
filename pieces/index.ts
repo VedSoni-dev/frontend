@@ -180,6 +180,19 @@ export const PIECES: Piece[] = [
     media: media("meadow"),
     theme: { light: "#d9c8b3", dark: "#d9c8b3" },
   },
+  {
+    path: "hold",
+    name: "baize",
+    what: "Hold-to-confirm pool button",
+    title: "Sinks a pool shot when you hold",
+    line: "A hold-to-confirm button that is a tiny pool table: hold it and the cue draws back, let it fill and the ball drops. Your words and felt, one file.",
+    credit: { name: "ozzy", handle: "ozzyxs1a", url: "https://x.com/ozzyxs1a/status/2123441401904144799", work: "the “hold to confirm, but pool” post" },
+    repo: "https://github.com/VedSoni-dev/frontend/tree/main/pieces/hold",
+    usesAi: false,
+    embed: { label: "baize.js", href: "/hold/baize.js" },
+    media: media("hold"),
+    theme: { light: "#e8e8e8", dark: "#141414" },
+  },
 ];
 
 export function piece(path: string): Piece {

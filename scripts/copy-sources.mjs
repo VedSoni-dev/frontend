@@ -8,12 +8,13 @@
 //                                 -> public/bubble/suds.js         (its engine as a plain script: <suds-footer> + window.Suds)
 //   pieces/sky/cirrus.js          -> public/sky/cirrus.js          (cirrus: an ES module that also defines <cirrus-sky>)
 //   pieces/meadow/loam.js        -> public/meadow/loam.js       (loam: an ES module that also defines <loam-meadow>)
+//   pieces/hold/baize.js          -> public/hold/baize.js          (baize: an ES module that also defines <baize-hold>)
 //   pieces/glass/Glass.tsx        -> public/glass/Glass.tsx        (vellum's one-file React footer)
 //                                 -> public/glass/glass.js         (its engine, mountGlass(), as a plain script for the HTML version)
 // Run by `npm run dev` and `npm run build`; the outputs are committed too, so the URLs work from any checkout.
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-for (const d of ["public/flowers", "public/slider", "public/footer", "public/effects", "public/sharks", "public/bubble", "public/sky", "public/glass", "public/meadow"]) mkdirSync(d, { recursive: true });
+for (const d of ["public/flowers", "public/slider", "public/footer", "public/effects", "public/sharks", "public/bubble", "public/sky", "public/glass", "public/meadow", "public/hold"]) mkdirSync(d, { recursive: true });
 copyFileSync("pieces/flowers/seedbed.js", "public/flowers/seedbed.js");
 copyFileSync("pieces/footer/GrainFooter.tsx", "public/footer/GrainFooter.tsx");
 copyFileSync("pieces/effects/Tincture.tsx", "public/effects/Tincture.tsx");
@@ -22,6 +23,7 @@ copyFileSync("pieces/bubble/Suds.tsx", "public/bubble/Suds.tsx");
 copyFileSync("pieces/sky/cirrus.js", "public/sky/cirrus.js");
 copyFileSync("pieces/meadow/loam.js", "public/meadow/loam.js");
 copyFileSync("pieces/glass/Glass.tsx", "public/glass/Glass.tsx");
+copyFileSync("pieces/hold/baize.js", "public/hold/baize.js");
 
 // vellum: the engine region of Glass.tsx, types stripped, as a plain script (the HTML/CSS export inlines it).
 {
@@ -104,4 +106,4 @@ if (typeof document !== "undefined") {
 if (typeof module === "object" && module && module.exports) module.exports = api;
 })();
 `);
-console.log("copy-sources: public/flowers/seedbed.js, public/slider/detent.js, public/footer/GrainFooter.tsx, public/effects/Tincture.tsx, public/sharks/Shoal.tsx, public/bubble/Suds.tsx, public/bubble/suds.js, public/sky/cirrus.js, public/glass/Glass.tsx, public/glass/glass.js, public/meadow/loam.js");
+console.log("copy-sources: public/flowers/seedbed.js, public/slider/detent.js, public/footer/GrainFooter.tsx, public/effects/Tincture.tsx, public/sharks/Shoal.tsx, public/bubble/Suds.tsx, public/bubble/suds.js, public/sky/cirrus.js, public/glass/Glass.tsx, public/glass/glass.js, public/meadow/loam.js, public/hold/baize.js");
